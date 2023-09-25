@@ -16,7 +16,7 @@ function bePositive($arr) {
     $count = count($arr);
     $type =  gettype($arr[0]);
     for($i = 0; $i < $count; $i++) {
-        $arr[$i] = abs($arr[$i]);
+        $arr[$i] = abs(intval($arr[$i]));
         settype($arr[$i], $type);
     }
 
