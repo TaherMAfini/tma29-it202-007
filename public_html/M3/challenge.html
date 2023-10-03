@@ -8,6 +8,7 @@
         window.addEventListener("load", () => {
             console.log("loaded via javascript");
             //TODO: add any extra onload processing you may need here
+            getCurrentSelection();
         });
         function getCurrentSelection() {
             setTimeout(() => {
@@ -24,7 +25,6 @@
                 //Note: likely you'll want to call updateCurrentPage towards the end
             }, 100);
         }
-        getCurrentSelection();
         
         
     </script>
