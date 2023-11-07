@@ -121,15 +121,62 @@ $username = get_username();
 
 <script>
     function validate(form) {
+        const emailMatch = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6})*$/;
+        const usernameMatch = /^[a-z0-9_-]{3,16}$/;
         let pw = form.newPassword.value;
         let con = form.confirmPassword.value;
+        let email = form.email.value;
+        let username = form.username.value;
+        let curpw = form.currentPassword.value;
         let isValid = true;
         //TODO add other client side validation....
+        if(email.length === 0){
+            flash("Email must not be empty", "danger");
+            return false;
+        }
+        if(username.length === 0){
+            flash("Username must not be empty", "danger");
+            return false;
+        }
+        if(curpw.length === 0){
+            flash("Current password must not be empty", "danger");
+            return false;
+        }
+        if(pw.length === 0){
+            flash("New password must not be empty", "danger");
+            return false;
+        }
+        if(con.length === 0){
+            flash("Confirm password must not be empty", "danger");
+            return false;
+        }
 
+        if(!emailMatch.test(email)){
+            flash("Invalid email address", "danger");
+            return false;
+        }
+        if(!usernameMatch.test(username)){
+            flash("Username must only contain 3-16 characters a-z, 0-9, _, or -", "danger");
+            return false;
+        }
+
+        if(curpw.length < 8){
+            flash("Current password too short", "danger");
+            return false;
+        }
+        if(pw.length < 8){
+            flash("New password too short", "danger");
+            return false;
+        }
+        if(con.length < 8){
+            flash("Confirm password too short", "danger");
+            return false;
+        }
+        
         //example of using flash via javascript
         //find the flash container, create a new element, appendChild
         if (pw !== con) {
-            flash("Password and Confrim password must match", "warning");
+            flash("Password and Confirm password must match", "warning");
             isValid = false;
         }
         return isValid;

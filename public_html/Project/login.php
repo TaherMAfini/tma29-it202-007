@@ -16,6 +16,38 @@ require(__DIR__ . "/../../partials/nav.php");
     function validate(form) {
         //TODO 1: implement JavaScript validation
         //ensure it returns false for an error and true for success
+        const emailMatch = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6})*$/;
+        // const usernameMatch = /^[a-z0-9_-]{3,16}$/;
+        let email = form.email.value.trim();
+        // let username = form.username.value.trim();
+        let password = form.password.value;
+
+        if(email.length === 0){
+            flash("Email must not be empty", "danger");
+            return false;
+        }
+        // if(username.length === 0){
+        //     flash("Username must not be empty", "danger");
+        //     return false;
+        // }
+        if(password.length === 0){
+            flash("Password must not be empty", "danger");
+            return false;
+        }
+
+        if(!emailMatch.test(email)){
+            flash("Invalid email address", "danger");
+            return false;
+        }
+        // if(!usernameMatch.test(username)){
+        //     flash("Username must only contain 3-16 characters a-z, 0-9, _, or -", "danger");
+        //     return false;
+        // }
+
+        if(password.length < 8){
+            flash("Password too short", "danger");
+            return false;
+        }
 
         return true;
     }
