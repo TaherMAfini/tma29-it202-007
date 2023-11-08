@@ -43,14 +43,20 @@ nav li{
     margin: 0 10px;
 }
 
-nav li a{
-    /* color: black */
+nav li a {
+    color: darkblue;
+    text-decoration: none;
+}
+
+nav li a:hover{
+    color: orangered;
 }
 
 input{
     border-radius: 5px;
     border: 1px solid;
     font-size: 1rem;
+    color: darkblue;
 }
 
 td input[type="submit"] {
@@ -63,6 +69,10 @@ input[type="submit"] {
     border: 1px solid;
     margin: 1rem 0;
     padding: 0.3rem;
+}
+
+input[type="submit"]:hover {
+    background-color: lightblue;
 }
 
 textarea {
@@ -83,6 +93,6 @@ div {
 
 body{
     background-color: wheat;
-    color: black;
+    color: darkblue;
     font-family: sans-serif;
 }
