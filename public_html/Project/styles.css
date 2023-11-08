@@ -1,23 +1,88 @@
+.alert {
+    margin: 0.5rem 0;
+    padding: 0.5rem 2rem;
+    width: fit-content;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    border: black 1px solid;
+}
+
 .alert-success {
-    background-color: green
+    background-color: green;
+    color: wheat
 }
 
 .alert-warning {
-    background-color: yellow;
+    background-color: yellow; 
 }
 
 .alert-danger {
     background-color: red;
+    color: wheat
 }
 
 .alert-info {
     background-color: teal;
+    color: wheat
 }
-nav li{display: inline; background-color: rebeccapurple;}
-nav li a{color: hotpink}
-input{border-radius: 50%;}
-body{
-    background-color: hotpink;
-    color: rgb(153, 0, 153);
 
+.mb-3 {
+    margin: 5px 0;
+}
+
+nav {
+    padding: 10px 0;
+    background-color: lightblue;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    border: solid 5px darkblue;
+}
+
+nav li{
+    display: inline; 
+    margin: 0 10px;
+}
+
+nav li a{
+    /* color: black */
+}
+
+input{
+    border-radius: 5px;
+    border: 1px solid;
+    font-size: 1rem;
+}
+
+td input[type="submit"] {
+    font-size: 1rem;
+    padding: 0.3rem;
+}
+
+input[type="submit"] {
+    background-color: white;
+    border: 1px solid;
+    margin: 1rem 0;
+    padding: 0.3rem;
+}
+
+textarea {
+    border-radius: 5px;
+    min-height: 3rem;
+    margin: 0;
+}
+
+td {
+    padding: 0.5rem 1.5rem;
+    /* border: 1px solid; */
+}
+
+div {
+    margin: 0.5rem 0;
+
+}
+
+body{
+    background-color: wheat;
+    color: black;
+    font-family: sans-serif;
 }
