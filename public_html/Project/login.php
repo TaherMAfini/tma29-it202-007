@@ -21,27 +21,28 @@ require(__DIR__ . "/../../partials/nav.php");
         let email = form.email.value.trim();
         // let username = form.username.value.trim();
         let password = form.password.value;
+        let valid = true;
 
         if(email.length === 0){
             flash("Email/Username must not be empty", "danger");
-            return false;
+            valid = false;
         }
         if(password.length === 0){
             flash("Password must not be empty", "danger");
-            return false;
+            valid = false;
         }
 
         if(!emailMatch.test(email) && !usernameMatch.test(email)){
             flash("Invalid email/username", "danger");
-            return false;
+            valid = false;
         }
 
         if(password.length < 8){
             flash("Password too short", "danger");
-            return false;
+            valid = false;
         }
 
-        return true;
+        return valid;
     }
 </script>
 <?php
