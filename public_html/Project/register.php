@@ -31,43 +31,44 @@ reset_session();
         let username = form.username.value.trim();
         let password = form.password.value;
         let confirm = form.confirm.value;
+        let valid = true;
 
         if(email.length === 0){
             flash("Email must not be empty", "danger");
-            return false;
+            valid = false;
         }
         if(username.length === 0){
             flash("Username must not be empty", "danger");
-            return false;
+            valid = false;
         }
         if(password.length === 0){
             flash("Password must not be empty", "danger");
-            return false;
+            valid = false;
         }
         if(confirm.length === 0){
             flash("Confirm password must not be empty", "danger");
-            return false;
+            valid = false;
         }
 
         if(!emailMatch.test(email)){
             flash("Invalid email address", "danger");
-            return false;
+            valid = false;
         }
         if(!usernameMatch.test(username)){
             flash("Username must only contain 3-16 characters a-z, 0-9, _, or -", "danger");
-            return false;
+            valid = false;
         }
 
         if(password.length < 8){
             flash("Password too short", "danger");
-            return false;
+            valid = false;
         }
 
         if(password.length > 0 && password !== confirm){
             flash("Passwords must match", "danger");
-            return false;
+            valid = false;
         }
-        return true;
+        return valid;
     }
 </script>
 <?php
