@@ -148,7 +148,7 @@ $username = get_username();
             isValid = false;
         }
 
-        if(pw.length > 0 && con.length > 0 && curpw.length > 0{
+        if(pw.length > 0 && con.length > 0 && curpw.length > 0) {
             if(pw.length < 8){
                 flash("New password must be at least 8 characters", "danger");
                 isValid = false;
