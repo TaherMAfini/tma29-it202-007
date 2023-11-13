@@ -138,18 +138,6 @@ $username = get_username();
             flash("Username must not be empty", "danger");
             return false;
         }
-        if(curpw.length === 0){
-            flash("Current password must not be empty", "danger");
-            return false;
-        }
-        if(pw.length === 0){
-            flash("New password must not be empty", "danger");
-            return false;
-        }
-        if(con.length === 0){
-            flash("Confirm password must not be empty", "danger");
-            return false;
-        }
 
         if(!emailMatch.test(email)){
             flash("Invalid email address", "danger");
@@ -157,19 +145,6 @@ $username = get_username();
         }
         if(!usernameMatch.test(username)){
             flash("Username must only contain 3-16 characters a-z, 0-9, _, or -", "danger");
-            return false;
-        }
-
-        if(curpw.length < 8){
-            flash("Current password too short", "danger");
-            return false;
-        }
-        if(pw.length < 8){
-            flash("New password too short", "danger");
-            return false;
-        }
-        if(con.length < 8){
-            flash("Confirm password too short", "danger");
             return false;
         }
         
