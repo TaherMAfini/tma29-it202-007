@@ -138,18 +138,6 @@ $username = get_username();
             flash("Username must not be empty", "danger");
             isValid = false;
         }
-        if(curpw.length === 0){
-            flash("Current password must not be empty", "danger");
-            isValid = false;
-        }
-        if(pw.length === 0){
-            flash("New password must not be empty", "danger");
-            isValid = false;
-        }
-        if(con.length === 0){
-            flash("Confirm password must not be empty", "danger");
-            isValid = false;
-        }
 
         if(!emailMatch.test(email)){
             flash("Invalid email address", "danger");
@@ -160,25 +148,18 @@ $username = get_username();
             isValid = false;
         }
 
-        if(curpw.length < 8){
-            flash("Current password too short", "danger");
-            isValid = false;
-        }
-        if(pw.length < 8){
-            flash("New password too short", "danger");
-            isValid = false;
-        }
-        if(con.length < 8){
-            flash("Confirm password too short", "danger");
-            isValid = false;
+        if(pw.length > 0 && con.length > 0 && curpw.length > 0{
+            if(pw.length < 8){
+                flash("New password must be at least 8 characters", "danger");
+                isValid = false;
+            }
+
+            if(pw !== con){
+                flash("New passwords don't match", "danger");
+                isValid = false;
+            }
         }
         
-        //example of using flash via javascript
-        //find the flash container, create a new element, appendChild
-        if (pw !== con) {
-            flash("Password and Confirm password must match", "warning");
-            isValid = false;
-        }
         return isValid;
     }
 </script>
