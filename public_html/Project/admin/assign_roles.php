@@ -70,14 +70,18 @@ if (isset($_POST["username"])) {
 ?>
 <h1>Assign Roles</h1>
 <form method="POST">
-    <input type="search" name="username" placeholder="Username search" />
-    <input type="submit" value="Search" />
+    <div class="input-group mb-3 w-25 " >
+        <input type="search" class="form-control" name="username" placeholder="Username search" />
+        <div class="input-group-append">
+            <input type="submit" class="btn btn-primary" value="Search" />
+        </div>
+    </div>
 </form>
 <form method="POST">
     <?php if (isset($username) && !empty($username)) : ?>
         <input type="hidden" name="username" value="<?php se($username, false); ?>" />
     <?php endif; ?>
-    <table>
+    <table class="table table-secondary">
         <thead>
             <th>Users</th>
             <th>Roles to Assign</th>
@@ -88,9 +92,9 @@ if (isset($_POST["username"])) {
                     <table>
                         <?php foreach ($users as $user) : ?>
                             <tr>
-                                <td>
-                                    <label for="user_<?php se($user, 'id'); ?>"><?php se($user, "username"); ?></label>
-                                    <input id="user_<?php se($user, 'id'); ?>" type="checkbox" name="users[]" value="<?php se($user, 'id'); ?>" />
+                                <td class="form-check ">
+                                    <label class="form-check-label" for="user_<?php se($user, 'id'); ?>"><?php se($user, "username"); ?></label>
+                                    <input class="form-check-input" id="user_<?php se($user, 'id'); ?>" type="checkbox" name="users[]" value="<?php se($user, 'id'); ?>" />
                                 </td>
                                 <td><?php se($user, "roles", "No Roles"); ?></td>
                             </tr>
@@ -99,16 +103,16 @@ if (isset($_POST["username"])) {
                 </td>
                 <td>
                     <?php foreach ($active_roles as $role) : ?>
-                        <div>
-                            <label for="role_<?php se($role, 'id'); ?>"><?php se($role, "name"); ?></label>
-                            <input id="role_<?php se($role, 'id'); ?>" type="checkbox" name="roles[]" value="<?php se($role, 'id'); ?>" />
+                        <div class="form-check">
+                            <label class="form-check-label" for="role_<?php se($role, 'id'); ?>"><?php se($role, "name"); ?></label>
+                            <input class="form-check-input" id="role_<?php se($role, 'id'); ?>" type="checkbox" name="roles[]" value="<?php se($role, 'id'); ?>" />
                         </div>
                     <?php endforeach; ?>
                 </td>
             </tr>
         </tbody>
     </table>
-    <input type="submit" value="Toggle Roles" />
+    <input type="submit" class="btn btn-primary" value="Toggle Roles" />
 </form>
 <?php
 //note we need to go up 1 more directory

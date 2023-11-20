@@ -46,10 +46,16 @@ try {
 ?>
 <h1>List Roles</h1>
 <form method="POST">
-    <input type="search" name="role" placeholder="Role Filter" value="<?php se($_POST, "role");?>" />
-    <input type="submit" value="Search" />
+    <div class="input-group mb-3 w-25 " >
+        <input type="search" class="form-control" name="role" placeholder="Role Filter" value="<?php se($_POST, "role");?>" />
+        <div class="input-group-append">
+            <input type="submit" class="btn btn-primary" value="Search" />
+        </div>
+    </div>
+
+    
 </form>
-<table>
+<table class="table table-secondary">
     <thead>
         <th>ID</th>
         <th>Name</th>
@@ -76,7 +82,7 @@ try {
                                 <?php /* if this is part of a search, lets persist the search criteria so it reloads correctly*/ ?>
                                 <input type="hidden" name="role" value="<?php se($search, null); ?>" />
                             <?php endif; ?>
-                            <input type="submit" value="Toggle" />
+                            <input type="submit" class="btn btn-secondary" value="Toggle" />
                         </form>
                     </td>
                 </tr>

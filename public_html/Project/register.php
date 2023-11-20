@@ -3,23 +3,23 @@ require(__DIR__ . "/../../partials/nav.php");
 reset_session();
 ?>
 <form onsubmit="return validate(this)" method="POST">
-    <div>
-        <label for="email">Email</label>
-        <input type="email" name="email" required />
+    <div class="mb-3 w-25">
+        <label class="form-label" for="email">Email</label>
+        <input class="form-control" type="email" name="email" required />
     </div>
-    <div>
-        <label for="username">Username</label>
-        <input type="text" name="username" required maxlength="30" />
+    <div class="mb-3 w-25">
+        <label class="form-label" for="username">Username</label>
+        <input class="form-control" type="text" name="username" required maxlength="30" />
     </div>
-    <div>
-        <label for="pw">Password</label>
-        <input type="password" id="pw" name="password" required minlength="8" />
+    <div class="mb-3 w-25">
+        <label class="form-label" for="pw">Password</label>
+        <input class="form-control" type="password" id="pw" name="password" required minlength="8" />
     </div>
-    <div>
-        <label for="confirm">Confirm</label>
-        <input type="password" name="confirm" required minlength="8" />
+    <div class="mb-3 w-25">
+        <label class="form-label" for="confirm">Confirm</label>
+        <input class="form-control" type="password" name="confirm" required minlength="8" />
     </div>
-    <input type="submit" value="Register" />
+    <input class="btn btn-primary" type="submit" value="Register" />
 </form>
 <script>
     function validate(form) {
