@@ -49,7 +49,7 @@ try {
     <div class="input-group mb-3 w-25 " >
         <input type="search" class="form-control" name="role" placeholder="Role Filter" value="<?php se($_POST, "role");?>" />
         <div class="input-group-append">
-            <input type="submit" class="btn btn-primary" value="Search" />
+            <?php render_button(["type"=>"submit", "text"=>"Search"]); ?>
         </div>
     </div>
 
@@ -82,7 +82,7 @@ try {
                                 <?php /* if this is part of a search, lets persist the search criteria so it reloads correctly*/ ?>
                                 <input type="hidden" name="role" value="<?php se($search, null); ?>" />
                             <?php endif; ?>
-                            <input type="submit" class="btn btn-secondary" value="Toggle" />
+                            <?php render_button(["type"=>"submit", "text"=>"Toggle", "color"=>"secondary"]); ?>
                         </form>
                     </td>
                 </tr>

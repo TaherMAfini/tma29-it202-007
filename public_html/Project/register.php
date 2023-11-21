@@ -19,7 +19,7 @@ reset_session();
         <label class="form-label" for="confirm">Confirm</label>
         <input class="form-control" type="password" name="confirm" required minlength="8" />
     </div>
-    <input class="btn btn-primary" type="submit" value="Register" />
+    <?php render_button(["type"=>"submit", "text"=>"Register"]); ?>
 </form>
 <script>
     function validate(form) {

@@ -73,7 +73,7 @@ if (isset($_POST["username"])) {
     <div class="input-group mb-3 w-25 " >
         <input type="search" class="form-control" name="username" placeholder="Username search" />
         <div class="input-group-append">
-            <input type="submit" class="btn btn-primary" value="Search" />
+            <?php render_button(["type"=>"submit", "text"=>"Search"]); ?>
         </div>
     </div>
 </form>
@@ -112,7 +112,7 @@ if (isset($_POST["username"])) {
             </tr>
         </tbody>
     </table>
-    <input type="submit" class="btn btn-primary" value="Toggle Roles" />
+    <?php render_button(["type"=>"submit", "text"=>"Toggle Roles"]); ?>
 </form>
 <?php
 //note we need to go up 1 more directory

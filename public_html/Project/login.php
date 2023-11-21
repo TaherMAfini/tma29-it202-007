@@ -10,7 +10,7 @@ require(__DIR__ . "/../../partials/nav.php");
         <label class="form-label" for="pw">Password</label>
         <input class="form-control" type="password" id="pw" name="password" required minlength="8" />
     </div>
-    <input class="btn btn-primary" type="submit" value="Login" />
+    <?php render_button(["type"=>"submit", "text"=>"Login"]); ?>
 </form>
 <script>
     function validate(form) {
