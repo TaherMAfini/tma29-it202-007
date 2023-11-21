@@ -94,28 +94,13 @@ $email = get_user_email();
 $username = get_username();
 ?>
 <form method="POST" onsubmit="return validate(this);">
-    <div class="mb-3 w-25">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" name="email" id="email" value="<?php se($email); ?>" />
-    </div>
-    <div class="mb-3 w-25">
-        <label for="username" class="form-label">Username</label>
-        <input type="text" class="form-control" name="username" id="username" value="<?php se($username); ?>" />
-    </div>
+    <?php render_input(["type"=>"email", "id"=>"email", "name"=>"email", "label"=>"Email", "width"=>"w-25", "value"=>se($email, null, "", false)]);?>
+    <?php render_input(["type"=>"text", "id"=>"username", "name"=>"username", "label"=>"Username", "width"=>"w-25", "value"=>se($username, null, "", false)]);?>
     <!-- DO NOT PRELOAD PASSWORD -->
-    <div class="h3">Password Reset</div>
-    <div class="mb-3 w-25">
-        <label for="cp" class="form-label">Current Password</label>
-        <input type="password" class="form-control" name="currentPassword" id="cp" />
-    </div>
-    <div class="mb-3 w-25">
-        <label for="np" class="form-label">New Password</label>
-        <input type="password"class="form-control"  name="newPassword" id="np" />
-    </div>
-    <div class="mb-3 w-25">
-        <label for="conp" class="form-label">Confirm Password</label>
-        <input type="password" class="form-control" name="confirmPassword" id="conp" />
-    </div>
+    <div class="h3 my-3">Password Reset</div>
+    <?php render_input(["type"=>"password", "id"=>"cp", "name"=>"currentPassword", "label"=>"Current Password", "width"=>"w-25"]);?>
+    <?php render_input(["type"=>"password", "id"=>"np", "name"=>"newPassword", "label"=>"New Password", "width"=>"w-25"]);?>
+    <?php render_input(["type"=>"password", "id"=>"conp", "name"=>"confirmPassword", "label"=>"Confirm Password", "width"=>"w-25"]);?>
     <input type="submit" value="Update Profile" name="save" class="btn btn-primary" />
 </form>
 
