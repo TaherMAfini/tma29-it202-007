@@ -70,8 +70,9 @@ if (isset($_POST["username"])) {
 ?>
 <h1>Assign Roles</h1>
 <form method="POST">
-    <div class="input-group mb-3 w-25 " >
-        <input type="search" class="form-control" name="username" placeholder="Username search" />
+    <div class="input-group mb-3 w-25" >
+        <!-- <input type="search" class="form-control" name="username" placeholder="Username search" /> -->
+        <?php render_input(["type"=>"search", "id"=>"search", "name"=>"username", "placeholder"=>"Username search"]);?>
         <div class="input-group-append">
             <?php render_button(["type"=>"submit", "text"=>"Search"]); ?>
         </div>
@@ -92,11 +93,11 @@ if (isset($_POST["username"])) {
                     <table>
                         <?php foreach ($users as $user) : ?>
                             <tr>
-                                <td class="form-check ">
+                                <td class="form-check px-7">
                                     <label class="form-check-label" for="user_<?php se($user, 'id'); ?>"><?php se($user, "username"); ?></label>
                                     <input class="form-check-input" id="user_<?php se($user, 'id'); ?>" type="checkbox" name="users[]" value="<?php se($user, 'id'); ?>" />
                                 </td>
-                                <td><?php se($user, "roles", "No Roles"); ?></td>
+                                <td class="px-3"><?php se($user, "roles", "No Roles"); ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </table>

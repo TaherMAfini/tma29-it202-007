@@ -46,8 +46,8 @@ try {
 ?>
 <h1>List Roles</h1>
 <form method="POST">
-    <div class="input-group mb-3 w-25 " >
-        <input type="search" class="form-control" name="role" placeholder="Role Filter" value="<?php se($_POST, "role");?>" />
+    <div class="input-group mb-3 w-25" >
+        <?php render_input(["type"=>"search", "id"=>"role", "name"=>"role", "placeholder"=>"Role Filter", "value"=>se($_POST, "role", "", false)]);?>
         <div class="input-group-append">
             <?php render_button(["type"=>"submit", "text"=>"Search"]); ?>
         </div>

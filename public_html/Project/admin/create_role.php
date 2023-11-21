@@ -30,14 +30,8 @@ if (isset($_POST["name"]) && isset($_POST["description"])) {
 ?>
 <h1>Create Role</h1>
 <form method="POST">
-    <div class="mb-3 w-25">
-        <label for="name" class="form-label">Name</label>
-        <input id="name" class="form-control" name="name" required />
-    </div>
-    <div class="mb-3 w-50">
-        <label for="d" class="form-label">Description</label>
-        <textarea name="description" class="form-control" id="d"></textarea>
-    </div>
+    <?php render_input(["type"=>"text", "id"=>"name", "name"=>"name", "label"=>"Name", "width"=>"w-25"]);?>
+    <?php render_input(["type"=>"textarea", "id"=>"d", "name"=>"description", "label"=>"Description", "width"=>"w-50"]);?>
     <?php render_button(["text"=>"Create Role", "type"=>"submit"]); ?>
 </form>
 <?php
