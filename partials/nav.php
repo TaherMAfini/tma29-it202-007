@@ -32,7 +32,8 @@ session_start();
 <link rel="stylesheet" href="<?php echo get_url('styles.css'); ?>">
 <script src="<?php echo get_url('helpers.js'); ?>"></script>
 <nav class="navbar navbar-expand-sm">
-    <ul class="navbar-nav">
+    <ul class="navbar-nav align-items-center mt-1">
+        <li class="navbar-brand">Soccer Scores</li>
         <?php if (is_logged_in()) : ?>
             <li class="nav-item"><a href="<?php echo get_url('home.php'); ?>">Home</a></li>
             <li class="nav-item"><a href="<?php echo get_url('profile.php'); ?>">Profile</a></li>
@@ -45,6 +46,7 @@ session_start();
             <li class="nav-item"><a href="<?php echo get_url('admin/create_role.php'); ?>">Create Role</a></li>
             <li class="nav-item"><a href="<?php echo get_url('admin/list_roles.php'); ?>">List Roles</a></li>
             <li class="nav-item"><a href="<?php echo get_url('admin/assign_roles.php'); ?>">Assign Roles</a></li>
+            <li class="nav-item"><a href="<?php echo get_url('admin/update_data.php'); ?>">Update API Data</a></li>
         <?php endif; ?>
         <?php if (is_logged_in()) : ?>
             <li class="nav-item"><a href="<?php echo get_url('logout.php'); ?>">Logout</a></li>
