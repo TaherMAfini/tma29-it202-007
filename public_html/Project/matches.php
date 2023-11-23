@@ -112,7 +112,7 @@ try {
 
 <form method="POST">
     <div class="champ-filter">
-        <label class="form-label" for="championship">Championship</label>
+        <label class="form-label" for="championship"><h4>Championship</h4></label>
         <select class="form-control w-50" name="championship" id="championship">
             <option disabled selected value> -- select an option -- </option>
             <?php foreach($championships as $c) : ?>
@@ -121,7 +121,7 @@ try {
         </select>
     </div>
     <div class="team-filter">
-        <label class="form-label" for="team">Team</label>
+        <label class="form-label" for="team"><h4>Team</h4></label>
         <select class="form-control w-50" name="team" id="team">
             <option disabled selected value> -- select an option -- </option>
             <?php foreach($teams as $t) : ?>
@@ -130,7 +130,7 @@ try {
         </select>
     </div>
     <div class="limit">
-        <label class="form-label" for="limit">Limit (1-100, default 10)</label>
+        <label class="form-label" for="limit"><h4>Limit (1-100, default 10)</h4></label>
         <input class="form-control w-25" type="number" name="limit" id="limit" value=10>
     </div>
     <?php render_button(["type"=>"submit", "text"=>"Filter"]); ?>
@@ -146,14 +146,14 @@ try {
     <tbody>
         <?php if (empty($matches)) : ?>
             <tr>
-                <td colspan="100%">No matches</td>
+                <td colspan="100%">No results available</td>
             </tr>
         <?php else : ?>
             <?php foreach ($matches as $match) : ?>
                 <tr>
                     <td class="col-2"><h5><?php se(date("m/d/Y", strtotime(se($match, "date", "", false))));?></h5></td>
-                    <td class="col-6"><?php render_match_card($match); ?></td>
-                    <td class="col-4"></td>
+                    <td class="col-7"><?php render_match_card($match); ?></td>
+                    <td class="col-3"></td>
                 </tr>
                 
             <?php endforeach; ?>
