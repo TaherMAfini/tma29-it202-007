@@ -14,3 +14,7 @@ function render_table($data = array())
 {
     include(__DIR__ . "/../partials/table.php");
 }
+
+function render_match_card($data = array()) {
+    include(__DIR__ . "/../partials/match_card.php");
+}

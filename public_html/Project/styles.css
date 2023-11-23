@@ -28,3 +28,51 @@ nav li a {
 nav li a:hover{
     color: orangered;
 }
+
+/* div.matchbox {
+    text-align: center;
+    display: flex;
+    flex-flow: row wrap;
+} */
+
+div.match-card {
+    border-radius: 5px;
+    padding: 10px 0;
+    text-align: center;
+}
+
+div.team {
+    width: 49%;
+    display: inline-block;
+}
+
+div.date {
+    text-align: center;
+}
+
+div.champ-filter{
+    width: 30%;
+    display: inline-block;
+}
+
+div.team-filter{
+    width: 30%;
+    display: inline-block;
+}
+
+div.limit{
+    width: 30%;
+    display: inline-block;
+}
+
+div.limit input {
+    display: inline-block;
+}
+
+div.champ-filter select {
+    display: inline-block;
+}
+
+div.team-filter select {
+    display: inline-block;
+}

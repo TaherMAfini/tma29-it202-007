@@ -251,12 +251,13 @@ if($action !== "") {
         flash(var_export($e->errorInfo, true), "danger");
     }
 
-    $update = false;
+    $update = true;
     if($last_update != null) {
         $last_update = strtotime($last_update);
         $now = time();
         $diff = $now - $last_update;
         if($diff < 43200) {
+            $update = false;
             flash("You can only update the API data every 12 hours.", "warning");
             die(header("Location: $BASE_PATH" . "/admin/update_data.php"));
         }
