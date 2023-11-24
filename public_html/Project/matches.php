@@ -6,6 +6,7 @@ if (is_logged_in(true)) {
     error_log("Session data: " . var_export($_SESSION, true));
 }
 
+var_export($_SESSION);
 
 $db = getDB();
 
@@ -173,6 +174,10 @@ try {
                         <form class="form" method="GET" action="<?php echo get_url("matchDetails.php")?>">
                             <input class="form-control" type="hidden" name="matchID" value="<?php se($match, "id")?>">
                             <button class="btn btn-primary">Details</button>
+                        </form>
+                        <form class="form" method="GET" action="<?php echo get_url("admin/delete_match.php")?>">
+                            <input class="form-control" type="hidden" name="matchID" value="<?php se($match, "id")?>">
+                            <button class="btn btn-secondary">Delete</button>
                         </form>
                     </td>
                 </tr>
