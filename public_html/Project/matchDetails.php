@@ -74,10 +74,12 @@ try {
         </div>
     </div>
     <div class="container-fluid">
-        <form class="form" method="GET" action="<?php echo get_url("admin/delete_match.php")?>">
-            <input class="form-control" type="hidden" name="matchID" value="<?php se($id)?>">
-            <button class="btn btn-secondary">Delete</button>
-        </form>
+        <?php if(has_role("Admin")) : ?>
+            <form class="form" method="GET" action="<?php echo get_url("admin/delete_match.php")?>">
+                <input class="form-control" type="hidden" name="matchID" value="<?php se($id)?>">
+                <button class="btn btn-secondary">Delete</button>
+            </form>
+        <?php endif ?>
     </div>
 
 </div>

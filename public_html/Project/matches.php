@@ -189,13 +189,15 @@ try {
                             <input class="form-control" type="hidden" name="matchID" value="<?php se($match, "id")?>">
                             <button class="btn btn-primary">Details</button>
                         </form>
-                        <form class="form" method="GET" action="<?php echo get_url("admin/delete_match.php")?>">
-                            <input class="form-control" type="hidden" name="matchID" value="<?php se($match, "id")?>">
-                            <input type="hidden" name="filterC" value="<?php se($championship)?>">
-                            <input type="hidden" name="filterT" value="<?php se($team)?>">
-                            <input type="hidden" name="filterL" value="<?php se($limit)?>">
-                            <button class="btn btn-secondary">Delete</button>
-                        </form>
+                        <?php if(has_role("Admin")) : ?>
+                            <form class="form" method="GET" action="<?php echo get_url("admin/delete_match.php")?>">
+                                <input class="form-control" type="hidden" name="matchID" value="<?php se($match, "id")?>">
+                                <input type="hidden" name="filterC" value="<?php se($championship)?>">
+                                <input type="hidden" name="filterT" value="<?php se($team)?>">
+                                <input type="hidden" name="filterL" value="<?php se($limit)?>">
+                                <button class="btn btn-secondary">Delete</button>
+                            </form>
+                        <?php endif ?>
                     </td>
                 </tr>
                 
