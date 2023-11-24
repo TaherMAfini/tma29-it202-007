@@ -11,6 +11,21 @@ if(!isset($_GET["matchID"])) {
     die(header("Location: $BASE_PATH" . "/matches.php"));
 }
 
+if(isset($_GET["filterC"]) && $_GET["filterC"] !== "") {
+    echo "FilterC set";
+    $_SESSION["championship"] = $_GET["filterC"];
+}
+
+if(isset($_GET["filterT"]) && $_GET["filterT"] !== "") {
+    echo "FilterT set";
+    $_SESSION["team"] = $_GET["filterT"];
+}
+
+if(isset($_GET["filterL"]) && $_GET["filterL"] !== "") {
+    echo "FilterL set";
+    $_SESSION["limit"] = $_GET["filterL"];
+}
+
 $id = (int)se($_GET, "matchID", -1, false);
 
 $query = "DELETE FROM Matches WHERE id = :id";
@@ -25,9 +40,6 @@ try {
     $rows = $stmt->rowCount();
     if($rows > 0) {
         flash("Match deleted", "success");
-        $_SESSION["championship"] = "1";
-        $_SESSION["team"] = "1";
-        $_SESSION["limit"] = 5;
         die(header("Location: $BASE_PATH" . "/matches.php"));
     } else {
         flash("No match found with the specified id", "danger");
@@ -37,7 +49,6 @@ try {
     flash(var_export($e->errorInfo, true), "danger");
 }
 
-var_export($id);
 ?>
 
 <?php
