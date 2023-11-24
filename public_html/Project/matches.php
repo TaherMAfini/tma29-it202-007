@@ -6,7 +6,6 @@ if (is_logged_in(true)) {
     error_log("Session data: " . var_export($_SESSION, true));
 }
 
-
 $db = getDB();
 
 $queryC = "Select id, name from Championships ORDER BY name ASC";
@@ -46,6 +45,22 @@ $championship = "";
 $team = "";
 $limit = 10;
 $params = [];
+
+if(isset($_SESSION["championship"])) {
+    $_POST["championship"] = se($_SESSION, "championship", "", false);
+    unset($_SESSION["championship"]);
+}
+
+if(isset($_SESSION["team"])) {
+    $_POST["team"] = se($_SESSION, "team", "", false);
+    unset($_SESSION["team"]);
+}
+
+if(isset($_SESSION["limit"])) {
+    $_POST["limit"] = se($_SESSION, "limit", "", false);
+    unset($_SESSION["limit"]);
+}
+
 if(isset($_POST["championship"])) {
     $champ = se($_POST, "championship", "", false);
     if(!empty($champ)) {
@@ -174,6 +189,15 @@ try {
                             <input class="form-control" type="hidden" name="matchID" value="<?php se($match, "id")?>">
                             <button class="btn btn-primary">Details</button>
                         </form>
+                        <?php if(has_role("Admin")) : ?>
+                            <form class="form" method="GET" action="<?php echo get_url("admin/delete_match.php")?>">
+                                <input class="form-control" type="hidden" name="matchID" value="<?php se($match, "id")?>">
+                                <input type="hidden" name="filterC" value="<?php se($championship)?>">
+                                <input type="hidden" name="filterT" value="<?php se($team)?>">
+                                <input type="hidden" name="filterL" value="<?php se($limit)?>">
+                                <button class="btn btn-secondary">Delete</button>
+                            </form>
+                        <?php endif ?>
                     </td>
                 </tr>
                 

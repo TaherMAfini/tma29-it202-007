@@ -35,7 +35,7 @@ try {
 
 ?>
 
-<div class="container-fluid">
+<div class="container-fluid match-details-card bg-info">
     <?php
         $date = se(date("m/d/Y H:i:s A", strtotime(se($match, "date", "", false))), null, "", false);
         $championship = htmlspecialchars_decode(se($match, "championship", "", false));
@@ -48,7 +48,7 @@ try {
         $manager2 = htmlspecialchars_decode(se($match, "manager2", "", false));
     ?>
 
-    <div class="container-fluid match-details-card mb-3 bg-info">
+    <div class="container-fluid mb-5">
         <div class="container-fluid matchDetails mb-3">
             <h5><?php se($date)?></h5>
             <h2><?php se($championship)?></h2>
@@ -72,6 +72,14 @@ try {
             <?php endif ?>
             <h2><?php se($score2)?></h2>
         </div>
+    </div>
+    <div class="container-fluid">
+        <?php if(has_role("Admin")) : ?>
+            <form class="form" method="GET" action="<?php echo get_url("admin/delete_match.php")?>">
+                <input class="form-control" type="hidden" name="matchID" value="<?php se($id)?>">
+                <button class="btn btn-secondary">Delete</button>
+            </form>
+        <?php endif ?>
     </div>
 
 </div>
