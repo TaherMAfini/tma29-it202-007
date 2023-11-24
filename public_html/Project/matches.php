@@ -101,9 +101,9 @@ try {
         $matches = $results;
     }
 } catch (PDOException $e) {
-    var_export($e->errorInfo);
     flash(var_export($e->errorInfo, true), "danger");
 }
+
 ?>
 
 
@@ -114,24 +114,40 @@ try {
     <div class="champ-filter">
         <label class="form-label" for="championship"><h4>Championship</h4></label>
         <select class="form-control w-50" name="championship" id="championship">
-            <option disabled selected value> -- select an option -- </option>
+            <?php if($championship !== "") : ?>
+                <option disabled value> -- select an option -- </option>
+            <?php else : ?>
+                <option disabled selected value> -- select an option -- </option>
+            <?php endif ?>
             <?php foreach($championships as $c) : ?>
-                <option value="<?php se($c, "id")?>"><?php se($c, "name", ""); ?></option>
+                <?php if($championship == $c["id"]) : ?>
+                    <option value="<?php se($c, "id")?>" selected><?php se($c, "name", ""); ?></option>
+                <?php else : ?>
+                    <option value="<?php se($c, "id")?>"><?php se($c, "name", ""); ?></option>
+                <?php endif ?>
             <?php endforeach; ?>
         </select>
     </div>
     <div class="team-filter">
         <label class="form-label" for="team"><h4>Team</h4></label>
         <select class="form-control w-50" name="team" id="team">
-            <option disabled selected value> -- select an option -- </option>
+            <?php if($team !== "") : ?>
+                <option disabled value> -- select an option -- </option>
+            <?php else : ?>
+                <option disabled selected value> -- select an option -- </option>
+            <?php endif ?>
             <?php foreach($teams as $t) : ?>
-                <option value="<?php se($t, "id")?>"><?php se($t, "name", ""); ?></option>
+                <?php if($team == $t["id"]) : ?>
+                    <option value="<?php se($t, "id")?>" selected><?php se($t, "name", ""); ?></option>
+                <?php else : ?>
+                    <option value="<?php se($t, "id")?>"><?php se($t, "name", ""); ?></option>
+                <?php endif ?>
             <?php endforeach; ?>
         </select>
     </div>
     <div class="limit">
         <label class="form-label" for="limit"><h4>Limit (1-100, default 10)</h4></label>
-        <input class="form-control w-25" type="number" name="limit" id="limit" value=10>
+        <input class="form-control w-25" type="number" name="limit" id="limit" value=<?php se($limit) ?>>
     </div>
     <?php render_button(["type"=>"submit", "text"=>"Filter"]); ?>
 </form>
@@ -153,7 +169,12 @@ try {
                 <tr>
                     <td class="col-2"><h5><?php se(date("m/d/Y", strtotime(se($match, "date", "", false))));?></h5></td>
                     <td class="col-7"><?php render_match_card($match); ?></td>
-                    <td class="col-3"></td>
+                    <td class="col-3">
+                        <form class="form" method="GET" action="<?php echo get_url("matchDetails.php")?>">
+                            <input class="form-control" type="hidden" name="matchID" value="<?php se($match, "id")?>">
+                            <button class="btn btn-primary">Details</button>
+                        </form>
+                    </td>
                 </tr>
                 
             <?php endforeach; ?>
