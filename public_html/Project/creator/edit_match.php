@@ -161,7 +161,7 @@ try {
         $match["date"] = date("Y-m-d\TH:i", strtotime(se($match, "date", "", false)));
     } else {
         flash("No match found with the specified id", "danger");
-        die(header("Location: matches.php"));
+        die(header("Location: $BASE_PATH" . "/matches.php"));
     }
 } catch (PDOException $e) {
     flash(var_export($e->errorInfo, true), "danger");
