@@ -75,9 +75,15 @@ try {
     </div>
     <div class="container-fluid">
         <?php if(has_role("Admin")) : ?>
-            <form class="form" method="GET" action="<?php echo get_url("admin/delete_match.php")?>">
+            <form class="form mx-3 details-button" method="GET" action="<?php echo get_url("admin/delete_match.php")?>">
                 <input class="form-control" type="hidden" name="matchID" value="<?php se($id)?>">
                 <button class="btn btn-secondary">Delete</button>
+            </form>
+        <?php endif ?>
+        <?php if(has_role("Admin") || has_role("Creator")) : ?>
+            <form class="form mx-3 details-button" method="GET" action="<?php echo get_url("creator/edit_match.php")?>">
+                <input class="form-control" type="hidden" name="matchID" value="<?php se($id)?>">
+                <button class="btn btn-dark">Edit</button>
             </form>
         <?php endif ?>
     </div>

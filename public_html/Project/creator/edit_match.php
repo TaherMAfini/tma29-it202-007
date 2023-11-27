@@ -1,11 +1,17 @@
 <?php
 require(__DIR__ . "/../../../partials/nav.php");
 
-
 if (!has_role("Admin") && !has_role("Creator")) {
     flash("You don't have permission to view this page", "warning");
-    die(header("Location: $BASE_PATH" . "/home.php"));
+    die(header("Location: $BASE_PATH" . "/matches.php"));
 }
+
+if(!isset($_GET["matchID"])) {
+    flash("No match was selected for editing", "warning");
+    die(header("Location: $BASE_PATH" . "/matches.php"));
+}
+
+$id = (int)se($_GET, "matchID", -1, false);
 
 $db = getDB();
 
@@ -39,7 +45,6 @@ try {
 } catch (PDOException $e) {
     flash(var_export($e->errorInfo, true), "danger");
 }
-
 
 if(isset($_POST["date"]) && isset($_POST["championship"]) && isset($_POST["team1"]) && isset($_POST["team2"]) && isset($_POST["score1"]) && isset($_POST["score2"])) {
     $date = date("Y-m-d H:i:s", strtotime($_POST["date"]));
@@ -113,8 +118,9 @@ if(isset($_POST["date"]) && isset($_POST["championship"]) && isset($_POST["team1
     }
 
     if(!$hasError) {
-        $query = "INSERT INTO Matches (date, championship_id, team1_id, team2_id, score1, score2, stadium) VALUES (:date, :champ, :team1, :team2, :score1, :score2, :stadium)";
+        $query = "UPDATE Matches SET date = :date, championship_id = :champ, team1_id = :team1, team2_id = :team2, score1 = :score1, score2 = :score2, stadium = :stadium WHERE id = :id";
         $stmt = $db->prepare($query);
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
         $stmt->bindValue(":date", $date, PDO::PARAM_STR);
         $stmt->bindValue(":champ", $champ, PDO::PARAM_INT);
         $stmt->bindValue(":team1", $team1, PDO::PARAM_INT);
@@ -129,12 +135,7 @@ if(isset($_POST["date"]) && isset($_POST["championship"]) && isset($_POST["team1
         
         try {
             $stmt->execute();
-            $rows = $stmt->rowCount();
-            if($rows > 0) {
-                flash("Match created successfully", "success");
-            } else {
-                flash("Match creation failed", "danger");
-            }
+            flash("Match updated successfully", "success");
         } catch (PDOException $e) {
             if($e->errorInfo[1] == 1062) {
                 flash("This match already exists.", "danger");
@@ -145,40 +146,75 @@ if(isset($_POST["date"]) && isset($_POST["championship"]) && isset($_POST["team1
     }
 }   
 
+
+
+$queryG = "SELECT m.date, m.stadium, c.id as championship, t1.id as team1, m.score1, t2.id as team2, m.score2 FROM Matches m JOIN Teams t1 ON t1.id = m.team1_id JOIN Teams t2 ON t2.id = m.team2_id JOIN Championships c ON m.championship_id = c.id WHERE m.id = :id";
+
+$stmtG = $db->prepare($queryG);
+$stmtG->bindValue(":id", $id, PDO::PARAM_INT);
+
+try {
+    $stmtG->execute();
+    $result = $stmtG->fetchAll(PDO::FETCH_ASSOC);
+    if($result) {
+        $match = $result[0];
+        $match["date"] = date("Y-m-d\TH:i", strtotime(se($match, "date", "", false)));
+    } else {
+        flash("No match found with the specified id", "danger");
+        die(header("Location: matches.php"));
+    }
+} catch (PDOException $e) {
+    flash(var_export($e->errorInfo, true), "danger");
+}
+
+
+
 ?>
 
 <div class="container-fluid">
     <h1 class="mb-3">Create Match</h1>
     <form onsubmit="return validate(this)" method="POST">
-        <?php render_input(["label"=>"Date - Time", "name"=>"date", "type"=>"datetime-local", "width"=>"w-25", "rules"=>["required"=>"true"]]); ?>
+        <?php render_input(["label"=>"Date - Time", "name"=>"date", "type"=>"datetime-local", "width"=>"w-25", "rules"=>["required"=>"true"], "value"=>se($match, "date", "", false)]); ?>
         <div class="championship mb-3">
             <label class="form-label" for="championship">Championship</label>
             <select class="form-control w-25" name="championship" id="championship" required>
-                <?php foreach($championships as $c) : ?>
+            <?php foreach($championships as $c) : ?>
+                <?php if($match["championship"] == $c["id"]) : ?>
+                    <option value="<?php se($c, "id")?>" selected><?php se($c, "name", ""); ?></option>
+                <?php else : ?>
                     <option value="<?php se($c, "id")?>"><?php se($c, "name", ""); ?></option>
-                <?php endforeach; ?>
+                <?php endif ?>
+            <?php endforeach; ?>
             </select>
         </div>
         <div class="team1 mb-3">
             <label class="form-label" for="team1">Team 1</label>
             <select class="form-control w-25" name="team1" id="team1" required>
                 <?php foreach($teams as $t) : ?>
-                    <option value="<?php se($t, "id")?>"><?php se($t, "name", ""); ?></option>
+                    <?php if($match["team1"] == $t["id"]) : ?>
+                        <option value="<?php se($t, "id")?>" selected><?php se($t, "name", ""); ?></option>
+                    <?php else : ?>
+                        <option value="<?php se($t, "id")?>"><?php se($t, "name", ""); ?></option>
+                    <?php endif ?>
                 <?php endforeach; ?>
             </select>
         </div>
-        <?php render_input(["label"=>"Team 1 Score", "name"=>"score1", "type"=>"number", "width"=>"w-25", "rules"=>["required"=>"true"]]); ?>
+        <?php render_input(["label"=>"Team 1 Score", "name"=>"score1", "type"=>"number", "width"=>"w-25", "rules"=>["required"=>"true"], "value"=>se($match, "score1", 0, false)]); ?>
         <div class="team2 mb-3">
             <label class="form-label" for="team2">Team 2</label>
             <select class="form-control w-25" name="team2" id="team2" required>
                 <?php foreach($teams as $t) : ?>
-                    <option value="<?php se($t, "id")?>"><?php se($t, "name", ""); ?></option>
+                    <?php if($match["team2"] == $t["id"]) : ?>
+                        <option value="<?php se($t, "id")?>" selected><?php se($t, "name", ""); ?></option>
+                    <?php else : ?>
+                        <option value="<?php se($t, "id")?>"><?php se($t, "name", ""); ?></option>
+                    <?php endif ?>
                 <?php endforeach; ?>
             </select>
         </div>
-        <?php render_input(["label"=>"Team 2 Score", "name"=>"score2", "type"=>"number", "width"=>"w-25", "rules"=>["required"=>"true"]]); ?>
+        <?php render_input(["label"=>"Team 2 Score", "name"=>"score2", "type"=>"number", "width"=>"w-25", "rules"=>["required"=>"true"], "value"=>se($match, "score2", 0, false)]); ?>
 
-        <?php render_input(["label"=>"Stadium", "name"=>"stadium", "width"=>"w-25"]); ?>
+        <?php render_input(["label"=>"Stadium", "name"=>"stadium", "width"=>"w-25", "value"=>se($match, "stadium", "", false)]); ?>
 
         <?php render_button(["type"=>"submit", "text"=>"Submit"]) ?>
     </form>
