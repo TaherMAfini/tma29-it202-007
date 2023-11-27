@@ -49,6 +49,9 @@ session_start();
             <li class="nav-item"><a href="<?php echo get_url('admin/assign_roles.php'); ?>">Assign Roles</a></li>
             <li class="nav-item"><a href="<?php echo get_url('admin/update_data.php'); ?>">Update API Data</a></li>
         <?php endif; ?>
+        <?php if (has_role("Admin") || has_role("Creator")) : ?>
+            <li class="nav-item"><a href="<?php echo get_url('creator/add_match.php'); ?>">Create Match</a></li>
+        <?php endif; ?>
         <?php if (is_logged_in()) : ?>
             <li class="nav-item"><a href="<?php echo get_url('logout.php'); ?>">Logout</a></li>
         <?php endif; ?>
