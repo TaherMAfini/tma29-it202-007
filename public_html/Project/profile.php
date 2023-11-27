@@ -94,29 +94,14 @@ $email = get_user_email();
 $username = get_username();
 ?>
 <form method="POST" onsubmit="return validate(this);">
-    <div class="mb-3">
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" value="<?php se($email); ?>" />
-    </div>
-    <div class="mb-3">
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username" value="<?php se($username); ?>" />
-    </div>
+    <?php render_input(["type"=>"email", "id"=>"email", "name"=>"email", "label"=>"Email", "width"=>"w-25", "value"=>se($email, null, "", false)]);?>
+    <?php render_input(["type"=>"text", "id"=>"username", "name"=>"username", "label"=>"Username", "width"=>"w-25", "value"=>se($username, null, "", false)]);?>
     <!-- DO NOT PRELOAD PASSWORD -->
-    <div>Password Reset</div>
-    <div class="mb-3">
-        <label for="cp">Current Password</label>
-        <input type="password" name="currentPassword" id="cp" />
-    </div>
-    <div class="mb-3">
-        <label for="np">New Password</label>
-        <input type="password" name="newPassword" id="np" />
-    </div>
-    <div class="mb-3">
-        <label for="conp">Confirm Password</label>
-        <input type="password" name="confirmPassword" id="conp" />
-    </div>
-    <input type="submit" value="Update Profile" name="save" />
+    <div class="h3 my-3">Password Reset</div>
+    <?php render_input(["type"=>"password", "id"=>"cp", "name"=>"currentPassword", "label"=>"Current Password", "width"=>"w-25"]);?>
+    <?php render_input(["type"=>"password", "id"=>"np", "name"=>"newPassword", "label"=>"New Password", "width"=>"w-25"]);?>
+    <?php render_input(["type"=>"password", "id"=>"conp", "name"=>"confirmPassword", "label"=>"Confirm Password", "width"=>"w-25"]);?>
+    <input type="submit" value="Update Profile" name="save" class="btn btn-primary" />
 </form>
 
 <script>
