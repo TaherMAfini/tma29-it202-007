@@ -1,0 +1,1 @@
+ALTER TABLE `Championships` ADD CONSTRAINT `uniqueChampionships` UNIQUE (`name`);
