@@ -198,6 +198,12 @@ try {
                                 <button class="btn btn-secondary">Delete</button>
                             </form>
                         <?php endif ?>
+                        <?php if(has_role("Admin") || has_role("Creator")) : ?>
+                            <form class="form" method="GET" action="<?php echo get_url("creator/edit_match.php")?>">
+                                <input class="form-control" type="hidden" name="matchID" value="<?php se($match, "id")?>">
+                                <button class="btn btn-dark">Edit</button>
+                            </form>
+                        <?php endif ?>
                     </td>
                 </tr>
                 

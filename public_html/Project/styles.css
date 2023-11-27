@@ -94,3 +94,7 @@ div.champ-filter select {
 div.team-filter select {
     display: inline-block;
 }
+
+form.details-button {
+    display: inline-block;
+}
