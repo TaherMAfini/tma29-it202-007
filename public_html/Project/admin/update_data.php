@@ -237,18 +237,17 @@ function process_champs($data, $db) {
 if($action !== "") {
     $db = getDB();
 
-    if($update) {
-        date_default_timezone_set("America/New_York");
-        $date = date("Ymd");
-        $data = get("https://soccer-football-info.p.rapidapi.com/matches/day/basic/", "SOCCER_API_KEY", ["d"=>$date],true,"soccer-football-info.p.rapidapi.com");
-        $response = json_decode($data["response"], true);
-        if($data["status"] != 200 || !isset($response["result"])) {
-            flash("Error fetching data from API", "danger");
-        } else {
-            $champ_mapping = process_champs($response["result"], $db);
-            $team_mapping = process_teams($response["result"], $db);
-            process_matches($response["result"], $team_mapping, $champ_mapping, $db);
-        }
+
+    date_default_timezone_set("America/New_York");
+    $date = date("Ymd");
+    $data = get("https://soccer-football-info.p.rapidapi.com/matches/day/basic/", "SOCCER_API_KEY", ["d"=>$date],true,"soccer-football-info.p.rapidapi.com");
+    $response = json_decode($data["response"], true);
+    if($data["status"] != 200 || !isset($response["result"])) {
+        flash("Error fetching data from API", "danger");
+    } else {
+        $champ_mapping = process_champs($response["result"], $db);
+        $team_mapping = process_teams($response["result"], $db);
+        process_matches($response["result"], $team_mapping, $champ_mapping, $db);
     }
 }
 
