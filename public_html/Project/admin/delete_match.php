@@ -12,17 +12,14 @@ if(!isset($_GET["matchID"])) {
 }
 
 if(isset($_GET["filterC"]) && $_GET["filterC"] !== "") {
-    echo "FilterC set";
     $_SESSION["championship"] = $_GET["filterC"];
 }
 
 if(isset($_GET["filterT"]) && $_GET["filterT"] !== "") {
-    echo "FilterT set";
     $_SESSION["team"] = $_GET["filterT"];
 }
 
 if(isset($_GET["filterL"]) && $_GET["filterL"] !== "") {
-    echo "FilterL set";
     $_SESSION["limit"] = $_GET["filterL"];
 }
 
