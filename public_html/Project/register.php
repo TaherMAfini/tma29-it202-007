@@ -3,23 +3,11 @@ require(__DIR__ . "/../../partials/nav.php");
 reset_session();
 ?>
 <form onsubmit="return validate(this)" method="POST">
-    <div>
-        <label for="email">Email</label>
-        <input type="email" name="email" required />
-    </div>
-    <div>
-        <label for="username">Username</label>
-        <input type="text" name="username" required maxlength="30" />
-    </div>
-    <div>
-        <label for="pw">Password</label>
-        <input type="password" id="pw" name="password" required minlength="8" />
-    </div>
-    <div>
-        <label for="confirm">Confirm</label>
-        <input type="password" name="confirm" required minlength="8" />
-    </div>
-    <input type="submit" value="Register" />
+    <?php render_input(["type"=>"email", "id"=>"email", "name"=>"email", "label"=>"Email", "width"=>"w-25", "rules"=>["required"=>true]]);?>
+    <?php render_input(["type"=>"text", "id"=>"username", "name"=>"username", "label"=>"Username", "width"=>"w-25", "rules"=>["required"=>true, "maxlength"=>"30"]]);?>
+    <?php render_input(["type"=>"password", "id"=>"pw", "name"=>"password", "label"=>"Password", "width"=>"w-25", "rules"=>["required"=>true, "minlength"=>"8"]]);?>
+    <?php render_input(["type"=>"password", "id"=>"confirm", "name"=>"confirm", "label"=>"Confirm", "width"=>"w-25", "rules"=>["required"=>true, "minlength"=>"8"]]);?>
+    <?php render_button(["type"=>"submit", "text"=>"Register"]); ?>
 </form>
 <script>
     function validate(form) {

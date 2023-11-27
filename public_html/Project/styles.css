@@ -1,33 +1,8 @@
-.alert {
-    margin: 0.5rem 0;
-    padding: 0.5rem 2rem;
-    width: fit-content;
-    font-size: 0.9rem;
-    border-radius: 10px;
-    border: black 1px solid;
-}
-
-.alert-success {
-    background-color: green;
-    color: wheat
-}
-
-.alert-warning {
-    background-color: yellow; 
-}
-
-.alert-danger {
-    background-color: red;
-    color: wheat
-}
-
-.alert-info {
-    background-color: teal;
-    color: wheat
-}
-
-.mb-3 {
-    margin: 5px 0;
+body{
+    background-color: wheat;
+    /* color: darkblue; */
+    font-family: sans-serif;
+    padding: 10px;
 }
 
 nav {
@@ -36,6 +11,8 @@ nav {
     border-radius: 10px;
     margin-bottom: 1rem;
     border: solid 5px darkblue;
+    display: flex;
+    vertical-align: middle;
 }
 
 nav li{
@@ -52,47 +29,72 @@ nav li a:hover{
     color: orangered;
 }
 
-input{
+/* div.matchbox {
+    text-align: center;
+    display: flex;
+    flex-flow: row wrap;
+} */
+
+div.match-card {
     border-radius: 5px;
-    border: 1px solid;
-    font-size: 1rem;
-    color: darkblue;
+    padding: 10px 0;
+    text-align: center;
 }
 
-td input[type="submit"] {
-    font-size: 1rem;
-    padding: 0.3rem;
-}
-
-input[type="submit"] {
-    background-color: white;
-    border: 1px solid;
-    margin: 1rem 0;
-    padding: 0.3rem;
-}
-
-input[type="submit"]:hover {
-    background-color: lightblue;
-}
-
-textarea {
+div.match-card {
     border-radius: 5px;
-    min-height: 3rem;
-    margin: 0;
+    padding: 10px 0;
+    text-align: center;
 }
 
-td {
-    padding: 0.5rem 1.5rem;
-    /* border: 1px solid; */
+div.match-details-card {
+    border-radius: 5px;
+    padding: 20px 0;
+    text-align: center;
+    width: 60%;
+    margin-top: 50px;
 }
 
-div {
-    margin: 0.5rem 0;
-
+div.team {
+    width: 49%;
+    display: inline-block;
 }
 
-body{
-    background-color: wheat;
-    color: darkblue;
-    font-family: sans-serif;
+div.date {
+    text-align: center;
+}
+
+div.matchDetails {
+    display: inline-block;
+}
+
+div.champ-filter{
+    width: 30%;
+    display: inline-block;
+}
+
+div.team-filter{
+    width: 30%;
+    display: inline-block;
+}
+
+div.limit{
+    width: 30%;
+    display: inline-block;
+}
+
+div.limit input {
+    display: inline-block;
+}
+
+div.champ-filter select {
+    display: inline-block;
+}
+
+div.team-filter select {
+    display: inline-block;
+}
+
+form.details-button {
+    display: inline-block;
 }

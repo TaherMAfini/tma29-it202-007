@@ -2,15 +2,9 @@
 require(__DIR__ . "/../../partials/nav.php");
 ?>
 <form onsubmit="return validate(this)" method="POST">
-    <div>
-        <label for="email">Email/Username</label>
-        <input type="text" name="email" required />
-    </div>
-    <div>
-        <label for="pw">Password</label>
-        <input type="password" id="pw" name="password" required minlength="8" />
-    </div>
-    <input type="submit" value="Login" />
+    <?php render_input(["type"=>"text", "id"=>"email", "name"=>"email", "label"=>"Email/Username", "width"=>"w-25", "rules"=>["required"=>true]]);?>
+    <?php render_input(["type"=>"password", "id"=>"pw", "name"=>"password", "label"=>"Password", "width"=>"w-25", "rules"=>["required"=>true, "minlength"=>"8"]]);?>
+    <?php render_button(["type"=>"submit", "text"=>"Login"]); ?>
 </form>
 <script>
     function validate(form) {
