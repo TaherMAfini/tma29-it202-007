@@ -137,7 +137,11 @@ if(isset($_POST["date"]) && isset($_POST["championship"]) && isset($_POST["team1
                 flash("Match creation failed", "danger");
             }
         } catch (PDOException $e) {
-            flash(var_export($e->errorInfo, true), "danger");
+            if($e->errorInfo[1] == 1062) {
+                flash("This match already exists.", "danger");
+            } else {
+                flash(var_export($e->errorInfo, true), "danger");
+            }
         }
     }
 }   
