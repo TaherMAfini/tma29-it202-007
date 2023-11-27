@@ -237,32 +237,6 @@ function process_champs($data, $db) {
 if($action !== "") {
     $db = getDB();
 
-    //Check for 12 hours between updates
-    $query = "Select max(modified) as last_update from `Matches`";
-
-    $stmt = $db->prepare($query);
-    
-    try{
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        $last_update = $result["last_update"];
-    } catch (PDOException $e) {
-        error_log(var_export($e, true));
-        flash(var_export($e->errorInfo, true), "danger");
-    }
-
-    $update = true;
-    if($last_update != null) {
-        $last_update = strtotime($last_update);
-        $now = time();
-        $diff = $now - $last_update;
-        if($diff < 43200) {
-            $update = false;
-            flash("You can only update the API data every 12 hours.", "warning");
-            die(header("Location: $BASE_PATH" . "/admin/update_data.php"));
-        }
-    }
-
     if($update) {
         date_default_timezone_set("America/New_York");
         $date = date("Ymd");
