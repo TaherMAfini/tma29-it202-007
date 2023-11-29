@@ -46,37 +46,23 @@ $team = "";
 $limit = 10;
 $params = [];
 
-if(isset($_SESSION["championship"])) {
-    $_POST["championship"] = se($_SESSION, "championship", "", false);
-    unset($_SESSION["championship"]);
-}
 
-if(isset($_SESSION["team"])) {
-    $_POST["team"] = se($_SESSION, "team", "", false);
-    unset($_SESSION["team"]);
-}
-
-if(isset($_SESSION["limit"])) {
-    $_POST["limit"] = se($_SESSION, "limit", "", false);
-    unset($_SESSION["limit"]);
-}
-
-if(isset($_POST["championship"])) {
-    $champ = se($_POST, "championship", "", false);
+if(isset($_GET["championship"])) {
+    $champ = se($_GET, "championship", "", false);
     if(!empty($champ)) {
         $championship = $champ;
     }
 }
 
-if(isset($_POST["team"])) {
-    $t = se($_POST, "team", "", false);
+if(isset($_GET["team"])) {
+    $t = se($_GET, "team", "", false);
     if(!empty($t)) {
         $team = $t;
     }
 }
 
-if(isset($_POST["limit"])) {
-    $l = se($_POST, "limit", 0, false);
+if(isset($_GET["limit"])) {
+    $l = se($_GET, "limit", 0, false);
     $l = (int)$l;
     if($l <= 100 && $l >= 1) {
         $limit = $l;
@@ -125,7 +111,7 @@ try {
 
 <h1>Matches</h1>
 
-<form method="POST">
+<form method="GET" class="list-filter">
     <div class="champ-filter">
         <label class="form-label" for="championship"><h4>Championship</h4></label>
         <select class="form-control w-50" name="championship" id="championship">
@@ -165,6 +151,12 @@ try {
         <input class="form-control w-25" type="number" name="limit" id="limit" value=<?php se($limit) ?>>
     </div>
     <?php render_button(["type"=>"submit", "text"=>"Filter"]); ?>
+</form>
+
+<form method="GET" class="clear-filter">
+    <div class="clear-filter">
+        <?php render_button(["type"=>"submit", "text"=>"Clear Filter", "color"=>"secondary"]); ?>
+    </div>
 </form>
 
 
