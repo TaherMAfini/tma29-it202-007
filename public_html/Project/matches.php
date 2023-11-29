@@ -39,9 +39,10 @@ try {
     flash(var_export($e->errorInfo, true), "danger");
 }
 
+$queryT = "SELECT count(m.id) FROM Matches m JOIN Teams t1 ON t1.id = m.team1_id JOIN Teams t2 ON t2.id = m.team2_id";
+
 $query = "SELECT m.id, m.championship_id, t1.name as team1, m.score1, t2.name as team2, m.score2, m.date FROM Matches m JOIN Teams t1 ON t1.id = m.team1_id JOIN Teams t2 ON t2.id = m.team2_id";
 
-$total_pages = 5;
 $page = se($_GET, "page", 1, false);
 
 $championship = "";
@@ -81,28 +82,53 @@ $filter_params["limit"] = $limit;
 
 if(!empty($championship) && !empty($team)) {
     $query = $query . " WHERE m.championship_id = :champ AND (m.team1_id = :team OR m.team2_id = :team)";
+    $queryT = $queryT . " WHERE m.championship_id = :champ AND (m.team1_id = :team OR m.team2_id = :team)";
     $params[":champ"] = (int)$championship;
     $params[":team"] = (int)$team;
 } else if (!empty($championship)) {
     $query = $query . " WHERE m.championship_id = :champ";
+    $queryT = $queryT . " WHERE m.championship_id = :champ";
     $params[":champ"] = (int)$championship;
 } else if (!empty($team)) {
     $query = $query . " WHERE m.team1_id = :team OR m.team2_id = :team";
+    $queryT = $queryT . " WHERE m.team1_id = :team OR m.team2_id = :team";
     $params[":team"] = (int)$team;
 }
 
-$query = $query . " ORDER BY m.modified DESC LIMIT :limit";
+$offset = ($page-1) * $limit;
+
+$query = $query . " ORDER BY m.modified DESC LIMIT :limit OFFSET :offset";
+$queryT = $queryT . " ORDER BY m.modified DESC";
 $params[":limit"] = $limit;
+$params[":offset"] = $offset;
+
+$stmtT = $db->prepare($queryT);
+
+
 $stmt = $db->prepare($query);
 
 $stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
+$stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
 
 if (!empty($championship)) {
     $stmt->bindValue(":champ", $params[":champ"], PDO::PARAM_INT);
+    $stmtT->bindValue(":champ", $params[":champ"], PDO::PARAM_INT);
 } 
 
 if (!empty($team)) {    
     $stmt->bindValue(":team", $params[":team"], PDO::PARAM_INT);
+    $stmtT->bindValue(":team", $params[":team"], PDO::PARAM_INT);
+}
+
+$total_pages = 1;
+
+try {
+    $stmtT->execute();
+    $results = $stmtT->fetch(PDO::FETCH_NUM);
+    $total_results = (int)$results[0];
+    $total_pages = ceil($total_results / $limit);
+} catch (PDOException $e) {
+    flash(var_export($e->errorInfo, true), "danger");
 }
 
 try {
@@ -175,7 +201,7 @@ function get_page_url($page) {
         </select>
     </div>
     <div class="limit">
-        <label class="form-label" for="limit"><h4>Limit (1-100, default 10)</h4></label>
+        <label class="form-label" for="limit"><h4>Items/Page (1-100)</h4></label>
         <input class="form-control w-25" type="number" name="limit" id="limit" value=<?php se($limit) ?>>
     </div>
     <?php render_button(["type"=>"submit", "text"=>"Filter"]); ?>
@@ -242,7 +268,7 @@ function get_page_url($page) {
                 </tr>
                 
             <?php endforeach; ?>
-            <?php endif; ?>
+        <?php endif; ?>
     </tbody>
 </table>
 
