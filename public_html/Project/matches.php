@@ -41,16 +41,22 @@ try {
 
 $query = "SELECT m.id, m.championship_id, t1.name as team1, m.score1, t2.name as team2, m.score2, m.date FROM Matches m JOIN Teams t1 ON t1.id = m.team1_id JOIN Teams t2 ON t2.id = m.team2_id";
 
+$total_pages = 5;
+$page = se($_GET, "page", 1, false);
+
 $championship = "";
 $team = "";
 $limit = 10;
 $params = [];
 
 
+$filter_params = [];
+
 if(isset($_GET["championship"])) {
     $champ = se($_GET, "championship", "", false);
     if(!empty($champ)) {
         $championship = $champ;
+        $filter_params["championship"] = $champ;
     }
 }
 
@@ -58,6 +64,7 @@ if(isset($_GET["team"])) {
     $t = se($_GET, "team", "", false);
     if(!empty($t)) {
         $team = $t;
+        $filter_params["team"] = $t;
     }
 }
 
@@ -66,8 +73,11 @@ if(isset($_GET["limit"])) {
     $l = (int)$l;
     if($l <= 100 && $l >= 1) {
         $limit = $l;
+        $filter_params["limit"] = $l;
     }
 }
+
+$filter_params["limit"] = $limit;
 
 if(!empty($championship) && !empty($team)) {
     $query = $query . " WHERE m.championship_id = :champ AND (m.team1_id = :team OR m.team2_id = :team)";
@@ -103,6 +113,24 @@ try {
     }
 } catch (PDOException $e) {
     flash(var_export($e->errorInfo, true), "danger");
+}
+
+function disable_prev($page) {
+    echo $page < 1 ? "disabled" : ""; 
+}
+
+function set_active($page, $i) {
+    echo ($page-1) == $i ? "active" : "";
+}
+
+function disable_next($page) {
+    global $total_pages;
+    echo $page >= $total_pages ? "disabled" : "";
+}
+
+function get_page_url($page) {
+    global $filter_params;
+    echo http_build_query($filter_params) . "&page=" . $page;
 }
 
 ?>
@@ -159,6 +187,20 @@ try {
     </div>
 </form>
 
+
+<div>
+    <ul class="pagination justify-content-center">
+        <li class="page-item <?php disable_prev(($page-1))?>">
+            <a class="page-link" href="?<?php get_page_url($page-1); ?>" tabindex="-1">Previous</a>
+        </li>
+        <?php for ($i = 0; $i < $total_pages; $i++) : ?>
+            <li class="page-item <?php set_active($page, $i); ?>"><a class="page-link" href="?<?php get_page_url($i+1) ?>"><?php echo ($i + 1); ?></a></li>
+        <?php endfor; ?>
+        <li class="page-item <?php disable_next(($page)); ?>">
+            <a class="page-link" href="?<?php get_page_url($page+1); ?>">Next</a>
+        </li>
+    </ul>
+</div>
 
 <table class="table table-secondary">
     <thead>
