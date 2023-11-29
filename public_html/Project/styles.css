@@ -68,6 +68,16 @@ div.matchDetails {
     display: inline-block;
 }
 
+form.list-filter {
+    width: 85%;
+    display: inline-block;
+}
+
+form.clear-filter {
+    width: 13%;
+    display: inline-block;
+}
+
 div.champ-filter{
     width: 30%;
     display: inline-block;
