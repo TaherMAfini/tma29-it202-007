@@ -8,40 +8,9 @@ if (is_logged_in(true)) {
 
 $db = getDB();
 
-$queryC = "Select id, name from Championships ORDER BY name ASC";
-$queryT = "Select id, name from Teams ORDER BY name ASC";
+$championships = get_championships($db);
 
-$stmtC= $db->prepare($queryC);
-
-try {
-    $stmtC->execute();
-    $results = $stmtC->fetchAll(PDO::FETCH_ASSOC);
-    if ($results) {
-        $championships = $results;
-    } else {
-        $championships = [];
-    }
-} catch (PDOException $e) {
-    flash(var_export($e->errorInfo, true), "danger");
-}
-
-$stmtT= $db->prepare($queryT);
-
-try {
-    $stmtT->execute();
-    $results = $stmtT->fetchAll(PDO::FETCH_ASSOC);
-    if ($results) {
-        $teams = $results;
-    } else {
-        $teams = [];
-    }
-} catch (PDOException $e) {
-    flash(var_export($e->errorInfo, true), "danger");
-}
-
-$queryT = "SELECT count(m.id) FROM Matches m JOIN Teams t1 ON t1.id = m.team1_id JOIN Teams t2 ON t2.id = m.team2_id";
-
-$query = "SELECT m.id, m.championship_id, t1.name as team1, m.score1, t2.name as team2, m.score2, m.date FROM Matches m JOIN Teams t1 ON t1.id = m.team1_id JOIN Teams t2 ON t2.id = m.team2_id";
+$teams = get_teams($db);
 
 $page = se($_GET, "page", 1, false);
 
@@ -49,15 +18,13 @@ $championship = "";
 $team = "";
 $limit = 10;
 $params = [];
-
-
-$filter_params = [];
+$params["page"] = $page;
 
 if(isset($_GET["championship"])) {
     $champ = se($_GET, "championship", "", false);
     if(!empty($champ)) {
         $championship = $champ;
-        $filter_params["championship"] = $champ;
+        $params[":champ"] = (int)$champ;
     }
 }
 
@@ -65,7 +32,7 @@ if(isset($_GET["team"])) {
     $t = se($_GET, "team", "", false);
     if(!empty($t)) {
         $team = $t;
-        $filter_params["team"] = $t;
+        $params[":team"] = (int)$t;
     }
 }
 
@@ -74,72 +41,13 @@ if(isset($_GET["limit"])) {
     $l = (int)$l;
     if($l <= 100 && $l >= 1) {
         $limit = $l;
-        $filter_params["limit"] = $l;
+        $params["limit"] = $l;
     }
 }
 
-$filter_params["limit"] = $limit;
+$total_pages = ceil(get_total($db, $params) / $limit);
 
-if(!empty($championship) && !empty($team)) {
-    $query = $query . " WHERE m.championship_id = :champ AND (m.team1_id = :team OR m.team2_id = :team)";
-    $queryT = $queryT . " WHERE m.championship_id = :champ AND (m.team1_id = :team OR m.team2_id = :team)";
-    $params[":champ"] = (int)$championship;
-    $params[":team"] = (int)$team;
-} else if (!empty($championship)) {
-    $query = $query . " WHERE m.championship_id = :champ";
-    $queryT = $queryT . " WHERE m.championship_id = :champ";
-    $params[":champ"] = (int)$championship;
-} else if (!empty($team)) {
-    $query = $query . " WHERE m.team1_id = :team OR m.team2_id = :team";
-    $queryT = $queryT . " WHERE m.team1_id = :team OR m.team2_id = :team";
-    $params[":team"] = (int)$team;
-}
-
-$offset = ($page-1) * $limit;
-
-$query = $query . " ORDER BY m.modified DESC LIMIT :limit OFFSET :offset";
-$queryT = $queryT . " ORDER BY m.modified DESC";
-$params[":limit"] = $limit;
-$params[":offset"] = $offset;
-
-$stmtT = $db->prepare($queryT);
-
-
-$stmt = $db->prepare($query);
-
-$stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
-$stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
-
-if (!empty($championship)) {
-    $stmt->bindValue(":champ", $params[":champ"], PDO::PARAM_INT);
-    $stmtT->bindValue(":champ", $params[":champ"], PDO::PARAM_INT);
-} 
-
-if (!empty($team)) {    
-    $stmt->bindValue(":team", $params[":team"], PDO::PARAM_INT);
-    $stmtT->bindValue(":team", $params[":team"], PDO::PARAM_INT);
-}
-
-$total_pages = 1;
-
-try {
-    $stmtT->execute();
-    $results = $stmtT->fetch(PDO::FETCH_NUM);
-    $total_results = (int)$results[0];
-    $total_pages = ceil($total_results / $limit);
-} catch (PDOException $e) {
-    flash(var_export($e->errorInfo, true), "danger");
-}
-
-try {
-    $stmt->execute();
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    if ($results) {
-        $matches = $results;
-    }
-} catch (PDOException $e) {
-    flash(var_export($e->errorInfo, true), "danger");
-}
+$matches = get_results($db, $params);
 
 function disable_prev($page) {
     echo $page < 1 ? "disabled" : ""; 
@@ -155,7 +63,15 @@ function disable_next($page) {
 }
 
 function get_page_url($page) {
-    global $filter_params;
+    global $params;
+    $filter_params = [];
+    if(isset($params[":champ"])) {
+        $filter_params["championship"] = $params[":champ"];
+    }
+    if(isset($params[":team"])) {
+        $filter_params["team"] = $params[":team"];
+    }
+    $filter_params["limit"] = se($params, "limit", 10, false);
     echo http_build_query($filter_params) . "&page=" . $page;
 }
 
