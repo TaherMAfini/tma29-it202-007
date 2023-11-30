@@ -13,7 +13,7 @@ if(!isset($_GET["matchID"])) {
 
 $id = (int)se($_GET, "matchID", -1, false);
 
-$query = "SELECT m.id, m.date, m.stadium, c.name as championship, t1.name as team1, m.score1, t1.manager as manager1, t2.name as team2, m.score2, t2.manager as manager2 FROM Matches m JOIN Teams t1 ON t1.id = m.team1_id JOIN Teams t2 ON t2.id = m.team2_id JOIN Championships c ON m.championship_id = c.id WHERE m.id = :id";
+$query = "SELECT m.id, m.date, m.stadium, c.id as champ_id, c.name as championship, t1.id as team1_id, t1.name as team1, m.score1, t1.manager as manager1, t2.id as team2_id, t2.name as team2, m.score2, t2.manager as manager2 FROM Matches m JOIN Teams t1 ON t1.id = m.team1_id JOIN Teams t2 ON t2.id = m.team2_id JOIN Championships c ON m.championship_id = c.id WHERE m.id = :id";
 
 $db = getDB();
 
@@ -38,11 +38,14 @@ try {
 <div class="container-fluid match-details-card bg-info">
     <?php
         $date = se(date("m/d/Y H:i:s A", strtotime(se($match, "date", "", false))), null, "", false);
+        $champ_id = se($match, "champ_id", -1, false);
         $championship = htmlspecialchars_decode(se($match, "championship", "", false));
         $stadium = htmlspecialchars_decode(se($match, "stadium", "", false));
+        $team1_id = se($match, "team1_id", -1, false);
         $team1 = htmlspecialchars_decode(se($match, "team1", "", false));
         $score1 = se($match, "score1", 0, false);
         $manager1 = htmlspecialchars_decode(se($match, "manager1", "", false));
+        $team2_id = se($match, "team2_id", -1, false);
         $team2 = htmlspecialchars_decode(se($match, "team2", "", false));
         $score2 = se($match, "score2", 0, false);
         $manager2 = htmlspecialchars_decode(se($match, "manager2", "", false));
@@ -57,6 +60,12 @@ try {
             <?php endif ?>
         </div>
         <div class="container-fluid team">
+            <form class="form mx-3 details-button" method="GET" action="addFavoriteTeam.php">
+                <input class="form-control" type="hidden" name="teamID" value="<?php se($team1_id)?>">
+                <input class="form-control" type="hidden" name="teamName" value="<?php se($team1)?>">
+                <input class="form-control" type="hidden" name="matchID" value="<?php se($id)?>">
+                <button class="btn btn-outline-dark btn-sm">Add to Favorites</button>
+            </form>
             <h2><?php se($team1) ?></h2>
             <?php if($manager1 !== "") : ?>
                 <h5>Manager: <?php se($manager1) ?></h5>
@@ -65,6 +74,12 @@ try {
             <h2><?php se($score1)?></h2>
         </div>
         <div class="container-fluid team">
+            <form class="form mx-3 details-button" method="GET" action="addFavoriteTeam.php">
+                <input class="form-control" type="hidden" name="teamID" value="<?php se($team2_id)?>">
+                <input class="form-control" type="hidden" name="teamName" value="<?php se($team2)?>">
+                <input class="form-control" type="hidden" name="matchID" value="<?php se($id)?>">
+                <button class="btn btn-outline-dark btn-sm">Add to Favorites</button>
+            </form>
             <h2><?php se($team2) ?></h2>
             <?php if($manager2 !== "") : ?>
                 <h5>Manager: <?php se($manager2) ?></h5>
