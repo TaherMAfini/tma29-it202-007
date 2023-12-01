@@ -1,6 +1,11 @@
 <?php 
 require(__DIR__ . "/../../partials/nav.php");
 
+if (is_logged_in(true)) {
+    //comment this out if you don't want to see the session variables
+    error_log("Session data: " . var_export($_SESSION, true));
+}
+
 if(!isset($_GET["teamID"])) {
     flash("No team was selected", "warning");
     if(isset($_GET["matchID"])) {
