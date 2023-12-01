@@ -55,6 +55,12 @@ try {
         <div class="container-fluid matchDetails mb-3">
             <h5><?php se($date)?></h5>
             <h2><?php se($championship)?></h2>
+            <form class="form mx-3 details-button" method="GET" action="addFavoriteChampionship.php">
+                <input class="form-control" type="hidden" name="champID" value="<?php se($champ_id)?>">
+                <input class="form-control" type="hidden" name="champName" value="<?php se($championship)?>">
+                <input class="form-control" type="hidden" name="matchID" value="<?php se($id)?>">
+                <button class="btn btn-outline-dark btn-sm">Add to Favorites</button>
+            </form>
             <?php if ($stadium !== "") : ?>
                 <h4>Stadium: <?php se($stadium)?></h4>
             <?php endif ?>

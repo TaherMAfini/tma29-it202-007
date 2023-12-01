@@ -1,35 +1,36 @@
 <?php 
 require(__DIR__ . "/../../partials/nav.php");
 
-if(!isset($_GET["teamID"])) {
-    flash("No team was selected", "warning");
+if(!isset($_GET["champID"])) {
+    flash("No championship was selected", "warning");
     if(isset($_GET["matchID"])) {
         die(header("Location: $BASE_PATH" . "/matchDetails.php?" . http_build_query(["matchID"=>$_GET["matchID"]])));
     } else {
         die(header("Location: $BASE_PATH" . "/matches.php"));
-    }}
+    }
+}
 
-$teamID = (int)se($_GET, "teamID", -1, false);
-$teamName = se($_GET, "teamName", "", false);
+$champID = (int)se($_GET, "champID", -1, false);
+$champName = se($_GET, "champName", "", false);
 
 $userID = get_user_id();
 
 $db = getDB();
 
-$query = "INSERT INTO FavoriteTeams (user_id, team_id, is_active) VALUES (:userID, :teamID, 1) ON DUPLICATE KEY UPDATE is_active = is_active";
+$query = "INSERT INTO FavoriteChampionships (user_id, champ_id, is_active) VALUES (:userID, :champID, 1) ON DUPLICATE KEY UPDATE is_active = is_active";
 
 $stmt = $db->prepare($query);
 
 $stmt->bindValue(":userID", $userID, PDO::PARAM_INT);
-$stmt->bindValue(":teamID", $teamID, PDO::PARAM_INT);
+$stmt->bindValue(":champID", $champID, PDO::PARAM_INT);
 
 try {
     $stmt->execute();
     $rows = $stmt->rowCount();
     if($rows > 0) {
-        flash("Added $teamName to your favorite teams", "success");
+        flash("Added $champName to your favorite championships", "success");
     } else {
-        flash("$teamName is already in your favorite teams", "info");
+        flash("$champName is already in your favorite championships", "info");
     }
     if(isset($_GET["matchID"])) {
         die(header("Location: $BASE_PATH" . "/matchDetails.php?" . http_build_query(["matchID"=>$_GET["matchID"]])));
@@ -38,7 +39,7 @@ try {
     }
 } catch (PDOException $e) {
     if($e->errorInfo[1] == "1216") {
-        flash("Invalid team id.", "warning");
+        flash("Invalid championship id.", "warning");
         if(isset($_GET["matchID"])) {
             die(header("Location: $BASE_PATH" . "/matchDetails.php?" . http_build_query(["matchID"=>$_GET["matchID"]])));
         } else {
