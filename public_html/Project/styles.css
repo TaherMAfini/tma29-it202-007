@@ -20,12 +20,12 @@ nav li{
     margin: 0 10px;
 }
 
-nav li a {
+nav a, a.dropdown-item, a.nav-link {
     color: darkblue;
     text-decoration: none;
 }
 
-nav li a:hover{
+nav a:hover, a.dropdown-item:hover, a.nav-link:hover {
     color: orangered;
 }
 

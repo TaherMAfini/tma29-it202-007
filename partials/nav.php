@@ -44,10 +44,16 @@ session_start();
             <li class="nav-item"><a href="<?php echo get_url('register.php'); ?>">Register</a></li>
         <?php endif; ?>
         <?php if (has_role("Admin")) : ?>
-            <li class="nav-item"><a href="<?php echo get_url('admin/create_role.php'); ?>">Create Role</a></li>
-            <li class="nav-item"><a href="<?php echo get_url('admin/list_roles.php'); ?>">List Roles</a></li>
-            <li class="nav-item"><a href="<?php echo get_url('admin/assign_roles.php'); ?>">Assign Roles</a></li>
-            <li class="nav-item"><a href="<?php echo get_url('admin/update_data.php'); ?>">Update API Data</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="<?php echo get_url('admin/create_role.php'); ?>">Create Role</a>
+                    <a class="dropdown-item" href="<?php echo get_url('admin/list_roles.php'); ?>">List Roles</a>
+                    <a class="dropdown-item" href="<?php echo get_url('admin/assign_roles.php'); ?>">Assign Roles</a>
+                    <a class="dropdown-item" href="<?php echo get_url('admin/update_data.php'); ?>">Update API Data</a>
+                </div>
+            </li>
+            
         <?php endif; ?>
         <?php if (has_role("Admin") || has_role("Creator")) : ?>
             <li class="nav-item"><a href="<?php echo get_url('creator/add_match.php'); ?>">Create Match</a></li>
