@@ -141,4 +141,52 @@ function get_results($db, $params) {
 
 }
 
+function get_total_favorite_teams($db, $params) {
+    $query = "SELECT count(*) as total FROM FavoriteTeams WHERE user_id = :userID AND is_active = 1 AND team_id IN (SELECT id FROM Teams WHERE LOWER(name) LIKE LOWER(:teamName))";
+
+    $userID = get_user_id();
+    $teamName = se($params, "team", "", false);
+
+    $stmt = $db->prepare($query);
+    
+    $stmt->bindValue(":userID", $userID, PDO::PARAM_INT);
+    $stmt->bindValue(":teamName", "%$teamName%", PDO::PARAM_STR);
+
+    try {
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $total = $result["total"];
+    } catch (PDOException $e) {
+        flash(var_export($e->errorInfo, true), "danger");
+    }
+
+    return $total;
+}
+
+function get_favorite_teams($db, $params) {
+    $query = "SELECT ft.id as assoc_id, t.id as team_id, t.name as name FROM FavoriteTeams ft JOIN Teams t on ft.team_id = t.id WHERE user_id = :userID AND ft.is_active = 1 AND LOWER(name) LIKE LOWER(:teamName)";
+
+    $userID = get_user_id();
+    $teamName = se($params, "team", "", false);
+
+    $stmt = $db->prepare($query);
+
+    $stmt->bindValue(":userID", $userID, PDO::PARAM_INT);
+    $stmt->bindValue(":teamName", "%$teamName%", PDO::PARAM_STR);
+
+    try {
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($results) {
+            $teams = $results;
+            return $teams;
+        }
+    } catch (PDOException $e) {
+        flash(var_export($e->errorInfo, true), "danger");
+    }
+
+    return [];
+
+}
+
 ?>

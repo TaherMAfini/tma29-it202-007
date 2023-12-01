@@ -108,3 +108,16 @@ div.team-filter select {
 form.details-button {
     display: inline-block;
 }
+
+span.team-name {
+    padding: 3px;
+    font-size: 1.5rem;
+}
+
+div.fav-teams-wrapper {
+    text-align: center;
+}
+
+table.fav-teams {
+    width: 60%;
+}
