@@ -169,10 +169,22 @@ function get_favorite_teams($db, $params) {
     $userID = get_user_id();
     $teamName = se($params, "team", "", false);
 
+    $limit = (int)se($params, "limit", 0, false);
+    $offset = (int)se($params, "offset", 0, false);
+
+    if($limit > 0) {
+        $query = $query . " LIMIT :limit OFFSET :offset";
+    }
+
     $stmt = $db->prepare($query);
 
     $stmt->bindValue(":userID", $userID, PDO::PARAM_INT);
     $stmt->bindValue(":teamName", "%$teamName%", PDO::PARAM_STR);
+    if($limit > 0) {
+        $stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
+        $stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
+
+    }
 
     try {
         $stmt->execute();

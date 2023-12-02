@@ -105,6 +105,10 @@ div.team-filter select {
     display: inline-block;
 }
 
+div.team-filter input {
+    display: inline-block;
+}
+
 form.details-button {
     display: inline-block;
 }
