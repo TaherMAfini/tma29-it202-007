@@ -12,7 +12,8 @@ if(!isset($_GET["teamID"])) {
         die(header("Location: $BASE_PATH" . "/matchDetails.php?" . http_build_query(["matchID"=>$_GET["matchID"]])));
     } else {
         die(header("Location: $BASE_PATH" . "/matches.php"));
-    }}
+    }
+}
 
 $teamID = (int)se($_GET, "teamID", -1, false);
 $teamName = se($_GET, "teamName", "", false);
@@ -21,7 +22,7 @@ $userID = get_user_id();
 
 $db = getDB();
 
-$query = "INSERT INTO FavoriteTeams (user_id, team_id, is_active) VALUES (:userID, :teamID, 1) ON DUPLICATE KEY UPDATE is_active = is_active";
+$query = "INSERT INTO FavoriteTeams (user_id, team_id, is_active) VALUES (:userID, :teamID, 1) ON DUPLICATE KEY UPDATE is_active = 1";
 
 $stmt = $db->prepare($query);
 

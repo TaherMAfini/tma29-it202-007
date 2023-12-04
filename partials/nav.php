@@ -38,6 +38,13 @@ session_start();
             <li class="nav-item"><a href="<?php echo get_url('home.php'); ?>">Home</a></li>
             <li class="nav-item"><a href="<?php echo get_url('profile.php'); ?>">Profile</a></li>
             <li class="nav-item"><a href="<?php echo get_url('matches.php'); ?>">Matches</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Favorites</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="<?php echo get_url('favoriteTeams.php'); ?>">Teams</a>
+                    <a class="dropdown-item" href="<?php echo get_url('favoriteChampionships.php'); ?>">Championships</a>
+                </div>
+            </li>
         <?php endif; ?>
         <?php if (!is_logged_in()) : ?>
             <li class="nav-item"><a href="<?php echo get_url('login.php'); ?>">Login</a></li>

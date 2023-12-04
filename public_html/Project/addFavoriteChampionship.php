@@ -22,7 +22,7 @@ $userID = get_user_id();
 
 $db = getDB();
 
-$query = "INSERT INTO FavoriteChampionships (user_id, champ_id, is_active) VALUES (:userID, :champID, 1) ON DUPLICATE KEY UPDATE is_active = is_active";
+$query = "INSERT INTO FavoriteChampionships (user_id, champ_id, is_active) VALUES (:userID, :champID, 1) ON DUPLICATE KEY UPDATE is_active = 1";
 
 $stmt = $db->prepare($query);
 
