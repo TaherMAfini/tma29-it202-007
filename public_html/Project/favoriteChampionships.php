@@ -137,7 +137,7 @@ function get_page_url($page) {
                                 <input type="hidden" name="filterName" value="<?php se($champFilter) ?>"/>
                                 <input type="hidden" name="limit" value="<?php se($limit, null, 10); ?>"/>
                                 <input type="hidden" name="page" value="<?php se($page, null, 1); ?>"/>
-                                <button class="btn btn-outline-dark" type="submit" >Remove from Favorites</button>
+                                <button class="btn btn-outline-danger" type="submit" >Remove from Favorites</button>
                             </form>
                         </td>
                     </tr>
