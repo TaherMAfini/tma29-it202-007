@@ -37,8 +37,8 @@ try {
 
 <div class="container-fluid match-details-card bg-info">
     <?php
-        $name = se($team, "name", "", false);
-        $manager = se($team, "manager", "Unknown", false);
+        $name = htmlspecialchars_decode(se($team, "name", "", false));
+        $manager = htmlspecialchars_decode(se($team, "manager", "Unknown", false));
     ?>
 
     <h1><?php se($name) ?></h1>

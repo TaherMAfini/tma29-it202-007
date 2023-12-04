@@ -104,7 +104,12 @@ function get_page_url($page) {
                     <?php foreach ($teams as $team) : ?>
                         <tr>
                             <td class="col-8"><span class="team-name"><?php se($team["name"], null, ""); ?></span></td>
-                            <td class="col-4"></td>
+                            <td class="col-4">
+                                <form method="GET" action="<?php se(get_url("teamDetails.php"))?>">
+                                    <input type="hidden" name="teamID" value="<?php se($team["id"], null, ""); ?>"/>
+                                    <button class="btn btn-primary" type="submit" >Details</button>
+                                </form>
+                            </td>
                         </tr>
                         
                     <?php endforeach; ?>

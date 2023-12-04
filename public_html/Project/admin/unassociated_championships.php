@@ -104,7 +104,12 @@ function get_page_url($page) {
                     <?php foreach ($championships as $champ) : ?>
                         <tr>
                             <td class="col-8"><span class="team-name"><?php se($champ["name"], null, ""); ?></span></td>
-                            <td class="col-4"></td>
+                            <td class="col-4">
+                                <form method="GET" action="<?php se(get_url("championshipDetails.php"))?>">
+                                    <input type="hidden" name="champID" value="<?php se($champ["id"], null, ""); ?>"/>
+                                    <button class="btn btn-primary" type="submit" >Details</button>
+                                </form>
+                            </td>
                         </tr>
                         
                     <?php endforeach; ?>
