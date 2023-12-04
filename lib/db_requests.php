@@ -261,4 +261,113 @@ function get_favorite_championships($db, $params) {
 
 }
 
+function get_total_unassociated_teams($db, $params) {
+    $query = "SELECT count(*) as total FROM Teams WHERE id NOT IN (SELECT DISTINCT team_id FROM FavoriteTeams WHERE is_active = 1) AND LOWER(name) LIKE LOWER(:teamName)";
+
+    $teamName = se($params, "team", "", false);
+
+    $stmt = $db->prepare($query);
+    
+    $stmt->bindValue(":teamName", "%$teamName%", PDO::PARAM_STR);
+
+    try {
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $total = $result["total"];
+    } catch (PDOException $e) {
+        flash(var_export($e->errorInfo, true), "danger");
+    }
+
+    return $total;
+}
+
+function get_unassociated_teams($db, $params) {
+    $query = "SELECT id, name FROM Teams WHERE id NOT IN (SELECT DISTINCT team_id FROM FavoriteTeams WHERE is_active = 1) AND LOWER(name) LIKE LOWER(:teamName) ORDER BY name ASC";
+
+    $teamName = se($params, "team", "", false);
+
+    $limit = (int)se($params, "limit", 0, false);
+    $offset = (int)se($params, "offset", 0, false);
+
+    if($limit > 0) {
+        $query = $query . " LIMIT :limit OFFSET :offset";
+    }
+
+    $stmt = $db->prepare($query);
+
+    $stmt->bindValue(":teamName", "%$teamName%", PDO::PARAM_STR);
+    if($limit > 0) {
+        $stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
+        $stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
+
+    }
+
+    try {
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($results) {
+            $teams = $results;
+            return $teams;
+        }
+    } catch (PDOException $e) {
+        flash(var_export($e->errorInfo, true), "danger");
+    }
+
+    return [];
+
+}
+
+function get_total_unassociated_championships($db, $params) {
+    $query = "SELECT count(*) as total FROM Championships WHERE id NOT IN (SELECT DISTINCT champ_id FROM FavoriteChampionships WHERE is_active = 1) AND LOWER(name) LIKE LOWER(:champName)";
+
+    $champName = se($params, "champ", "", false);
+
+    $stmt = $db->prepare($query);
+    
+    $stmt->bindValue(":champName", "%$champName%", PDO::PARAM_STR);
+
+    try {
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $total = $result["total"];
+    } catch (PDOException $e) {
+        flash(var_export($e->errorInfo, true), "danger");
+    }
+
+    return $total;
+}
+
+function get_unassociated_championships($db, $params) {
+    $query = "SELECT id, name FROM Championships WHERE id NOT IN (SELECT DISTINCT champ_id FROM FavoriteChampionships WHERE is_active = 1) AND LOWER(name) LIKE LOWER(:champName) ORDER BY name ASC";
+
+    $champName = se($params, "champ", "", false);
+
+    $limit = (int)se($params, "limit", 0, false);
+    $offset = (int)se($params, "offset", 0, false);
+
+    if($limit > 0) {
+        $query = $query . " LIMIT :limit OFFSET :offset";
+    }
+
+    $stmt = $db->prepare($query);
+
+    $stmt->bindValue(":champName", "%$champName%", PDO::PARAM_STR);
+
+    if($limit > 0) {
+        $stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
+        $stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
+    }
+
+    try {
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($results) {
+            $champs = $results;
+            return $champs;
+        }
+    } catch (PDOException $e) {
+        flash(var_export($e->errorInfo, true), "danger");
+    }
+}
+
 ?>

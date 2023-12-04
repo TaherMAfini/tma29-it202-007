@@ -7,6 +7,8 @@ if (!has_role("Admin")) {
     die(header("Location: " . get_url("home.php")));
 }
 
+$db = getDB();
+
 $champFilter = se($_GET, "champ", "", false);
 $limit = se($_GET, "limit", 10, false);
 
@@ -18,11 +20,11 @@ $page = se($_GET, "page", 1, false);
 
 $offset = ($page-1)*$limit;
 
-$total = 1;
+$total = get_total_unassociated_championships($db, []);
 
-$championships = [];
+$championships = get_unassociated_championships($db, ["champ"=>$champFilter, "limit"=>$limit, "offset"=>$offset]);
 
-$cur_total = 1;
+$cur_total = get_total_unassociated_championships($db, ["champ"=>$champFilter]);
 
 $total_pages = ceil($cur_total/$limit);
 
@@ -51,7 +53,7 @@ function get_page_url($page) {
 ?>
 
 <div class="container-fluid">
-    <h1>Unassociated Championships</h1>
+    <h1>Unassociated Championships (<?php se($total)?>)</h1>
 
     <form method="GET" class="list-filter mt-5">
         <div class="team-filter">

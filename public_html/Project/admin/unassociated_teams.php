@@ -7,6 +7,7 @@ if (!has_role("Admin")) {
     die(header("Location: " . get_url("home.php")));
 }
 
+$db = getDB();
 
 $teamFilter = se($_GET, "team", "", false);
 $limit = se($_GET, "limit", 10, false);
@@ -19,11 +20,11 @@ $page = se($_GET, "page", 1, false);
 
 $offset = ($page-1)*$limit;
 
-$total = 1;
+$total = get_total_unassociated_teams($db, []);
 
-$teams = [];
+$teams = get_unassociated_teams($db, ["team"=>$teamFilter, "limit"=>$limit, "offset"=>$offset]);
 
-$cur_total = 1;
+$cur_total = get_total_unassociated_teams($db, ["team"=>$teamFilter]);
 
 $total_pages = ceil($cur_total/$limit);
 
