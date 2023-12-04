@@ -58,6 +58,9 @@ session_start();
                     <a class="dropdown-item" href="<?php echo get_url('admin/list_roles.php'); ?>">List Roles</a>
                     <a class="dropdown-item" href="<?php echo get_url('admin/assign_roles.php'); ?>">Assign Roles</a>
                     <a class="dropdown-item" href="<?php echo get_url('admin/update_data.php'); ?>">Update API Data</a>
+                    <a class="dropdown-item" href="<?php echo get_url('admin/unassociated_teams.php'); ?>">Unassociated Teams</a>
+                    <a class="dropdown-item" href="<?php echo get_url('admin/unassociated_championships.php'); ?>">Unassociated Championships</a>
+
                 </div>
             </li>
             
