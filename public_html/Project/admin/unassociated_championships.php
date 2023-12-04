@@ -20,6 +20,7 @@ $offset = ($page-1)*$limit;
 
 $total = 1;
 
+$championships = [];
 
 $cur_total = 1;
 
@@ -84,6 +85,30 @@ function get_page_url($page) {
                 <a class="page-link" href="?<?php get_page_url($page+1); ?>">Next</a>
             </li>
         </ul>
+    </div>
+
+    <div class="row justify-content-center">
+        <table class="table table-secondary fav-teams">
+            <thead>
+                <th>Championship</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+                <?php if (empty($championships)) : ?>
+                    <tr>
+                        <td colspan="100%">No results available</td>
+                    </tr>
+                <?php else : ?>
+                    <?php foreach ($championships as $champ) : ?>
+                        <tr>
+                            <td class="col-8"><span class="team-name"><?php se($champ["name"], null, ""); ?></span></td>
+                            <td class="col-4"></td>
+                        </tr>
+                        
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
     </div>
 </div>
 

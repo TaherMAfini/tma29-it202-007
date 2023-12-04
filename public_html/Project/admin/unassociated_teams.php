@@ -21,6 +21,8 @@ $offset = ($page-1)*$limit;
 
 $total = 1;
 
+$teams = [];
+
 $cur_total = 1;
 
 $total_pages = ceil($cur_total/$limit);
@@ -84,6 +86,30 @@ function get_page_url($page) {
                 <a class="page-link" href="?<?php get_page_url($page+1); ?>">Next</a>
             </li>
         </ul>
+    </div>
+
+    <div class="row justify-content-center">
+        <table class="table table-secondary fav-teams">
+            <thead>
+                <th>Team</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+                <?php if (empty($teams)) : ?>
+                    <tr>
+                        <td colspan="100%">No results available</td>
+                    </tr>
+                <?php else : ?>
+                    <?php foreach ($teams as $team) : ?>
+                        <tr>
+                            <td class="col-8"><span class="team-name"><?php se($team["name"], null, ""); ?></span></td>
+                            <td class="col-4"></td>
+                        </tr>
+                        
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
     </div>
 
 </div>
