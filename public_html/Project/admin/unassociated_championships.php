@@ -73,7 +73,7 @@ function get_page_url($page) {
         </div>
     </form>
 
-    <h3>Items on Page: <?php se($cur_total)?></h3>
+    <h3>Items on Page: <?php se(count($championships))?></h3>
 
     <div>
         <ul class="pagination justify-content-center">
