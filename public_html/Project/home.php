@@ -1,8 +1,5 @@
 <?php
 require(__DIR__ . "/../../partials/nav.php");
-?>
-<h1 class="mb-5">Home</h1>
-<?php
 
 if (is_logged_in(true)) {
     //comment this out if you don't want to see the session variables
@@ -16,7 +13,11 @@ $team = se($_GET, "team", "", false);
 $limit = (int)se($_GET, "limit", 10, false);
 $page = (int)se($_GET, "page", 1, false);
 
-$total_pages = ceil(get_total_favorite_matches($db, [":champ"=>$championship, ":team"=>$team, "limit"=>$limit, "page"=>$page]) / $limit);
+$total = get_total_favorite_matches($db, []);
+
+$cur_total = get_total_favorite_matches($db, [":champ"=>$championship, ":team"=>$team, "limit"=>$limit, "page"=>$page]);
+
+$total_pages = ceil($cur_total / $limit);
 
 $matches = get_favorite_matches($db, [":champ"=>$championship, ":team"=>$team, "limit"=>$limit, "page"=>$page]);
 
@@ -49,6 +50,8 @@ function get_page_url($page) {
 }
 ?>
 
+<h1 class="mb-5">Home (<?php se($total)?>)</h1>
+
 <form method="GET" class="list-filter">
     <div class="team-filter">
         <label class="form-label" for="championship"><h4>Championship</h4></label>
@@ -70,6 +73,8 @@ function get_page_url($page) {
         <?php render_button(["type"=>"submit", "text"=>"Clear Filter", "color"=>"secondary"]); ?>
     </div>
 </form>
+
+<h3>Items on page: <?php se(count($matches))?></h3>
 
 
 <div class="container-fluid">
