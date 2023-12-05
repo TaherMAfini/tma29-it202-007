@@ -37,7 +37,7 @@ try {
 
 <div class="container-fluid match-details-card bg-info">
     <?php
-        $name = se($champ, "name", "", false);
+        $name = htmlspecialchars_decode(se($champ, "name", "", false));
     ?>
 
     <h1><?php se($name) ?></h1>
