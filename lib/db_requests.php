@@ -160,7 +160,7 @@ function get_total_favorite_teams($db, $params) {
         flash(var_export($e->errorInfo, true), "danger");
     }
 
-    return $total;
+    return 0;
 }
 
 function get_favorite_teams($db, $params) {
@@ -220,7 +220,7 @@ function get_total_favorite_championships($db, $params) {
         flash(var_export($e->errorInfo, true), "danger");
     }
 
-    return $total;
+    return 0;
 }
 
 function get_favorite_championships($db, $params) {
@@ -278,7 +278,7 @@ function get_total_unassociated_teams($db, $params) {
         flash(var_export($e->errorInfo, true), "danger");
     }
 
-    return $total;
+    return 0;
 }
 
 function get_unassociated_teams($db, $params) {
@@ -334,7 +334,7 @@ function get_total_unassociated_championships($db, $params) {
         flash(var_export($e->errorInfo, true), "danger");
     }
 
-    return $total;
+    return 0;
 }
 
 function get_unassociated_championships($db, $params) {
@@ -368,6 +368,68 @@ function get_unassociated_championships($db, $params) {
     } catch (PDOException $e) {
         flash(var_export($e->errorInfo, true), "danger");
     }
+}
+
+function get_total_favorite_matches($db, $params) {
+    $query = "SELECT m.id, m.championship_id, t1.name as team1, m.score1, t2.name as team2, m.score2, m.date FROM Matches m JOIN Teams t1 ON t1.id = m.team1_id JOIN Teams t2 ON t2.id = m.team2_id ";
+
+    $queryT = "SELECT count(m.id) FROM Matches m JOIN Teams t1 ON t1.id = m.team1_id JOIN Teams t2 ON t2.id = m.team2_id JOIN Championships c ON c.id = m.championship_id WHERE (c.id IN (SELECT DISTINCT champ_id FROM FavoriteChampionships WHERE is_active = 1 AND user_id = :userID) OR t1.id IN (SELECT DISTINCT team_id FROM FavoriteTeams WHERE is_active = 1 AND user_id = :userID) OR t2.id IN (SELECT DISTINCT team_id FROM FavoriteTeams WHERE is_active = 1 AND user_id = :userID)) AND LOWER(c.name) LIKE LOWER(:champ) AND (LOWER(t1.name) LIKE LOWER(:team) OR LOWER(t2.name) LIKE LOWER(:team))";
+
+    $userID = get_user_id();
+
+    $champ = se($params, ":champ", "", false);
+    $team = se($params, ":team", "", false);
+
+    $stmtT = $db->prepare($queryT);
+
+    $stmtT->bindValue(":userID", $userID, PDO::PARAM_INT);
+    $stmtT->bindValue(":champ", "%$champ%", PDO::PARAM_STR);
+    $stmtT->bindValue(":team", "%$team%", PDO::PARAM_STR);
+
+    try {
+        $stmtT->execute();
+        $results = $stmtT->fetch(PDO::FETCH_NUM);
+        $total_results = (int)$results[0];
+        return $total_results;
+    } catch (PDOException $e) {
+        flash(var_export($e->errorInfo, true), "danger");
+    }
+
+    return 0;
+}
+
+function get_favorite_matches($db, $params) {
+    $queryT = "SELECT  m.id, m.championship_id, t1.name as team1, m.score1, t2.name as team2, m.score2, m.date FROM Matches m JOIN Teams t1 ON t1.id = m.team1_id JOIN Teams t2 ON t2.id = m.team2_id JOIN Championships c ON c.id = m.championship_id WHERE (c.id IN (SELECT DISTINCT champ_id FROM FavoriteChampionships WHERE is_active = 1 AND user_id = :userID) OR t1.id IN (SELECT DISTINCT team_id FROM FavoriteTeams WHERE is_active = 1 AND user_id = :userID) OR t2.id IN (SELECT DISTINCT team_id FROM FavoriteTeams WHERE is_active = 1 AND user_id = :userID)) AND LOWER(c.name) LIKE LOWER(:champ) AND (LOWER(t1.name) LIKE LOWER(:team) OR LOWER(t2.name) LIKE LOWER(:team)) LIMIT :limit OFFSET :offset";
+
+    $userID = get_user_id();
+
+    $champ = se($params, ":champ", "", false);
+    $team = se($params, ":team", "", false);
+    $limit = (int)se($params, "limit", 10, false);
+    $page = (int)se($params, "page", 1, false);
+
+    $offset = ($page-1) * $limit;
+
+    $stmtT = $db->prepare($queryT);
+
+    $stmtT->bindValue(":userID", $userID, PDO::PARAM_INT);
+    $stmtT->bindValue(":champ", "%$champ%", PDO::PARAM_STR);
+    $stmtT->bindValue(":team", "%$team%", PDO::PARAM_STR);
+    $stmtT->bindValue(":limit", $limit, PDO::PARAM_INT);
+    $stmtT->bindValue(":offset", $offset, PDO::PARAM_INT);
+
+    try {
+        $stmtT->execute();
+        $results = $stmtT->fetchAll(PDO::FETCH_ASSOC);
+        if ($results) {
+            $matches = $results;
+            return $matches;
+        }
+    } catch (PDOException $e) {
+        flash(var_export($e->errorInfo, true), "danger");
+    }
+
+    return [];
 }
 
 ?>
