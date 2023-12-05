@@ -156,6 +156,7 @@ function get_total_favorite_teams($db, $params) {
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $total = $result["total"];
+        return $total;
     } catch (PDOException $e) {
         flash(var_export($e->errorInfo, true), "danger");
     }
@@ -216,6 +217,7 @@ function get_total_favorite_championships($db, $params) {
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $total = $result["total"];
+        return $total;
     } catch (PDOException $e) {
         flash(var_export($e->errorInfo, true), "danger");
     }
@@ -274,6 +276,7 @@ function get_total_unassociated_teams($db, $params) {
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $total = $result["total"];
+        return $total;
     } catch (PDOException $e) {
         flash(var_export($e->errorInfo, true), "danger");
     }
@@ -330,6 +333,7 @@ function get_total_unassociated_championships($db, $params) {
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $total = $result["total"];
+        return $total;
     } catch (PDOException $e) {
         flash(var_export($e->errorInfo, true), "danger");
     }
@@ -368,6 +372,8 @@ function get_unassociated_championships($db, $params) {
     } catch (PDOException $e) {
         flash(var_export($e->errorInfo, true), "danger");
     }
+
+    return [];
 }
 
 function get_total_favorite_matches($db, $params) {
