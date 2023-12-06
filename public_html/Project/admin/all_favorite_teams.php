@@ -116,6 +116,7 @@ function get_page_url($page) {
                                     <input type="hidden" name="username" value="<?php se($username) ?>"/>
                                     <input type="hidden" name="limit" value="<?php se($limit, null, 10); ?>"/>
                                     <input type="hidden" name="page" value="<?php se($page, null, 1); ?>"/>
+                                    <input type="hidden" name="return" value="all_favorite_teams"/>
                                     <button class="btn btn-outline-danger btn-sm" type="submit" >Remove from Favorites</button>
                                 </form>
                             </td>

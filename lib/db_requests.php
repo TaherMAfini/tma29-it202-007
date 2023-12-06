@@ -458,7 +458,7 @@ function get_total_favorited_teams_assoc($db, $params) {
 }
 
 function get_favorited_teams_assoc($db, $params) {
-    $query = "SELECT ft.id as assoc_id, t.id as team_id, t.name as team, u.username as username, u.id as user_id FROM FavoriteTeams ft JOIN Teams t on ft.team_id = t.id JOIN Users u on ft.user_id = u.id WHERE LOWER(u.username) LIKE LOWER(:username) ORDER BY t.name ASC LIMIT :limit OFFSET :offset";
+    $query = "SELECT ft.id as assoc_id, t.id as team_id, t.name as team, u.username as username, u.id as user_id FROM FavoriteTeams ft JOIN Teams t on ft.team_id = t.id JOIN Users u on ft.user_id = u.id WHERE is_active = 1 AND LOWER(u.username) LIKE LOWER(:username) ORDER BY t.name ASC LIMIT :limit OFFSET :offset";
 
     $username = se($params, "username", "", false);
 

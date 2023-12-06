@@ -8,14 +8,30 @@ if (is_logged_in(true)) {
 
 $return_params = [];
 $return_params["team"] = se($_GET, "filterName", "", false);
+$return_params["username"] = se($_GET, "username", "", false);
+$return_params["return"] = se($_GET, "return", "", false);
 $return_params["limit"] = (int)se($_GET, "limit", 10, false);
 $return_params["page"] = (int)se($_GET, "page", 1, false);
 
+var_export($return_params);
+
+$return_path = $BASE_PATH . "/favoriteTeams.php?";
+
+if($return_params["return"] === "all_favorite_teams") {
+    $return_path = $BASE_PATH . "/admin/all_favorite_teams.php?";
+    unset($return_params["team"]);
+    unset($return_params["return"]);
+}
+
+var_export($return_path);
+
 $return_url = http_build_query($return_params);
+
+var_export("Location: " . $return_path . $return_url);
 
 if(!isset($_GET["teamID"])) {
     flash("No favorite was selected for deletion", "warning");
-    die(header("Location: $BASE_PATH" . "/favoriteTeams.php?" . $return_params));
+    die(header("Location: " . $return_path . $return_url));
 }
 
 $teamID = (int)se($_GET, "teamID", -1, false);
@@ -42,12 +58,12 @@ try {
     } else {
         flash("$teamName is already not in your favorite teams", "info");
     }
-    die(header("Location: $BASE_PATH" . "/favoriteTeams.php?" . $return_url));
+    die(header("Location: " . $return_path . $return_url));
 
 } catch (PDOException $e) {
     if($e->errorInfo[1] == "1216") {
         flash("Invalid team id.", "warning");
-        die(header("Location: $BASE_PATH" . "/favoriteTeams.php?" . $return_url));
+        die(header("Location: " . $return_path . $return_url));
     }
     flash(var_export($e->errorInfo, true), "danger");
 }
