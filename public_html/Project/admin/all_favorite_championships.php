@@ -90,7 +90,7 @@ function get_page_url($page) {
         <table class="table table-secondary fav-assocs">
             <thead>
                 <th>User</th>
-                <th>Team</th>
+                <th>Championship</th>
                 <th>Total Associated Users</th>
                 <th>Actions</th>
             </thead>
@@ -116,7 +116,7 @@ function get_page_url($page) {
                                     <input type="hidden" name="username" value="<?php se($username) ?>"/>
                                     <input type="hidden" name="limit" value="<?php se($limit, null, 10); ?>"/>
                                     <input type="hidden" name="page" value="<?php se($page, null, 1); ?>"/>
-                                    <input type="hidden" name="return" value="all_favorite_teams"/>
+                                    <input type="hidden" name="return" value="all_favorite_championships"/>
                                     <button class="btn btn-outline-danger btn-sm" type="submit" >Remove from Favorites</button>
                                 </form>
                             </td>

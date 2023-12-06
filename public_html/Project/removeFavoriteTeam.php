@@ -13,8 +13,6 @@ $return_params["return"] = se($_GET, "return", "", false);
 $return_params["limit"] = (int)se($_GET, "limit", 10, false);
 $return_params["page"] = (int)se($_GET, "page", 1, false);
 
-var_export($return_params);
-
 $return_path = $BASE_PATH . "/favoriteTeams.php?";
 
 if($return_params["return"] === "all_favorite_teams") {
@@ -23,11 +21,7 @@ if($return_params["return"] === "all_favorite_teams") {
     unset($return_params["return"]);
 }
 
-var_export($return_path);
-
 $return_url = http_build_query($return_params);
-
-var_export("Location: " . $return_path . $return_url);
 
 if(!isset($_GET["teamID"])) {
     flash("No favorite was selected for deletion", "warning");

@@ -8,14 +8,24 @@ if (is_logged_in(true)) {
 
 $return_params = [];
 $return_params["champ"] = se($_GET, "filterName", "", false);
+$return_params["username"] = se($_GET, "username", "", false);
+$return_params["return"] = se($_GET, "return", "", false);
 $return_params["limit"] = (int)se($_GET, "limit", 10, false);
 $return_params["page"] = (int)se($_GET, "page", 1, false);
+
+$return_path = $BASE_PATH . "/favoriteChampionships.php?";
+
+if($return_params["return"] === "all_favorite_championships") {
+    $return_path = $BASE_PATH . "/admin/all_favorite_championships.php?";
+    unset($return_params["champ"]);
+    unset($return_params["return"]);
+}
 
 $return_url = http_build_query($return_params);
 
 if(!isset($_GET["champID"])) {
     flash("No favorite was selected for deletion", "warning");
-    die(header("Location: $BASE_PATH" . "/favoriteChampionships.php?" . $return_params));
+    die(header("Location: " . $return_path . $return_url));
 }
 
 $champID = (int)se($_GET, "champID", -1, false);
@@ -42,12 +52,12 @@ try {
     } else {
         flash("$champName is already not in your favorite championships", "info");
     }
-    die(header("Location: $BASE_PATH" . "/favoriteChampionships.php?" . $return_url));
+    die(header("Location: " . $return_path . $return_url));
 
 } catch (PDOException $e) {
     if($e->errorInfo[1] == "1216") {
         flash("Invalid championship id.", "warning");
-        die(header("Location: $BASE_PATH" . "/favoriteChampionships.php?" . $return_url));
+        die(header("Location: " . $return_path . $return_url));
     }
     flash(var_export($e->errorInfo, true), "danger");
 }
