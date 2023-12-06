@@ -55,9 +55,17 @@ function disable_next($page) {
 
 function get_page_url($page) {
     global $limit;
+    global $username;
     $filter_params = [];
+    $filter_params["username"] = se($username, null, "", false);
     $filter_params["limit"] = se($limit, null, 10, false);
     echo http_build_query($filter_params) . "&page=" . $page;
+}
+
+function get_profile_url($user_id) {
+    $params = [];
+    $params["id"] = $user_id;
+    return get_url("user_profile.php") . "?" . http_build_query($params);
 }
 
 ?>
@@ -125,7 +133,7 @@ function get_page_url($page) {
                 <?php else : ?>
                     <?php foreach ($favorites as $fav) : ?>
                         <tr>
-                            <td class="col-4"><span class="team-name"><?php se($fav["username"], null, ""); ?></span></td>
+                            <td class="col-4"><span class="team-name"><a href="<?php echo get_profile_url($fav["user_id"])?>"><?php se($fav["username"], null, ""); ?></a></span></td>
                             <td class="col-4"><span class="team-name"><?php se($fav["champ"], null, ""); ?></span></td>
                             <td class="col-2"><span class="team-name"><?php se($fav["count"])?></span></td>
                             <td class="col-2">
