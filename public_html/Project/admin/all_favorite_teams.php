@@ -9,6 +9,20 @@ if (!has_role("Admin")) {
 
 $db = getDB();
 
+if(isset($_POST["action"]) && $_POST["action"] == "delete_all") {
+    
+    $removeAll = remove_all_favorite_team_assoc($db, ["username"=>$_POST["username"]]);
+    if($removeAll) {
+        flash("Removed all favorite championships for users with \"" . $_POST["username"] . "\" in their username", "success");
+    } else {
+        flash("Error removing all favorite championships for users with \"" . $_POST["username"] . "\" in their username", "danger");
+    }
+    
+    $_GET["username"] = $_POST["username"];
+    $_GET["limit"] = $_POST["limit"];
+    $_GET["page"] = $_POST["page"];
+}
+
 $username = se($_GET, "username", "", false);
 $limit = (int)se($_GET, "limit", 10, false);
 
@@ -69,6 +83,16 @@ function get_page_url($page) {
             <?php render_button(["type"=>"submit", "text"=>"Clear Filter", "color"=>"secondary"]); ?>
         </div>
     </form>
+
+    <?php if ($username !== "" && !empty($favorites)) : ?>
+        <form method="POST">
+            <input type="hidden" name="username" value="<?php se($username) ?>"/>
+            <input type="hidden" name="limit" value="<?php se($limit, null, 10); ?>"/>
+            <input type="hidden" name="page" value="<?php se($page, null, 1); ?>"/>
+            <input type="hidden" name="action" value="delete_all"/>
+            <button class="btn btn-danger" type="submit" >Remove All Favorite Teams for users with "<?php se($username)?>" in their username</button>
+        </form>
+    <?php endif; ?>
 
     <h3>Items on Page: <?php se(count($favorites))?></h3>
 

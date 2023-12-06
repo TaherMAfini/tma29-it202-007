@@ -487,6 +487,25 @@ function get_favorited_teams_assoc($db, $params) {
     return [];
 }
 
+function remove_all_favorite_team_assoc($db, $params) {
+    $query = "UPDATE FavoriteTeams SET is_active = 0 WHERE user_id IN (SELECT id FROM Users WHERE LOWER(username) LIKE LOWER(:username))";
+
+    $username = se($params, "username", "", false);
+
+    $stmt = $db->prepare($query);
+
+    $stmt->bindValue(":username", "%$username%", PDO::PARAM_STR);
+
+    try {
+        $stmt->execute();
+        return true;
+    } catch (PDOException $e) {
+        flash(var_export($e->errorInfo, true), "danger");
+    }
+
+    return false;
+}
+
 function get_total_favorited_champs_assoc($db, $params) {
     $query = "SELECT count(*) FROM FavoriteChampionships WHERE is_active = 1 AND user_id IN (SELECT id FROM Users WHERE LOWER(username) LIKE LOWER(:username))";
 
@@ -536,6 +555,25 @@ function get_favorited_champs_assoc($db, $params) {
     }
 
     return [];
+}
+
+function remove_all_favorite_champ_assoc($db, $params) {
+    $query = "UPDATE FavoriteChampionships SET is_active = 0 WHERE user_id IN (SELECT id FROM Users WHERE LOWER(username) LIKE LOWER(:username))";
+
+    $username = se($params, "username", "", false);
+
+    $stmt = $db->prepare($query);
+
+    $stmt->bindValue(":username", "%$username%", PDO::PARAM_STR);
+
+    try {
+        $stmt->execute();
+        return true;
+    } catch (PDOException $e) {
+        flash(var_export($e->errorInfo, true), "danger");
+    }
+
+    return false;
 }
 
 ?>
