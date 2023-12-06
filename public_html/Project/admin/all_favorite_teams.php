@@ -104,7 +104,7 @@ function get_page_url($page) {
                         <tr>
                             <td class="col-4"><span class="team-name"><?php se($fav["username"], null, ""); ?></span></td>
                             <td class="col-4"><span class="team-name"><?php se($fav["team"], null, ""); ?></span></td>
-                            <td class="col-2"></span></td>
+                            <td class="col-2"><span class="team-name"><?php se($fav["count"])?></span></td>
                             <td class="col-2">
                                 <form method="GET" action="<?php se(get_url("teamDetails.php"))?>">
                                     <input type="hidden" name="teamID" value="<?php se($fav["team_id"], null, ""); ?>"/>
