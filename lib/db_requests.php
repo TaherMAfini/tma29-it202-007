@@ -436,4 +436,56 @@ function get_favorite_matches($db, $params) {
     return [];
 }
 
+function get_total_favorited_teams_assoc($db, $params) {
+    $query = "SELECT count(*) FROM FavoriteTeams WHERE is_active = 1 AND user_id IN (SELECT id FROM Users WHERE LOWER(username) LIKE LOWER(:username))";
+
+    $username = se($params, "username", "", false);
+
+    $stmt = $db->prepare($query);
+
+    $stmt->bindValue(":username", "%$username%", PDO::PARAM_STR);
+
+    try {
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_NUM);
+        $total_results = (int)$results[0];
+        return $total_results;
+    } catch (PDOException $e) {
+        flash(var_export($e->errorInfo, true), "danger");
+    }
+
+    return 0;
+}
+
+function get_favorited_teams_assoc($db, $params) {
+    $query = "SELECT ft.id as assoc_id, t.id as team_id, t.name as team, u.username as username, u.id as user_id FROM FavoriteTeams ft JOIN Teams t on ft.team_id = t.id JOIN Users u on ft.user_id = u.id WHERE LOWER(u.username) LIKE LOWER(:username) ORDER BY t.name ASC LIMIT :limit OFFSET :offset";
+
+    $username = se($params, "username", "", false);
+
+    $limit = (int)se($params, "limit", 0, false);
+    $page = (int)se($params, "page", 1, false);
+    
+    $offset = ($page-1) * $limit;
+
+    $stmt = $db->prepare($query);
+
+    $stmt->bindValue(":username", "%$username%", PDO::PARAM_STR);
+    $stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
+    $stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
+
+    try {
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($results) {
+            $assocs = $results;
+            return $assocs;
+        }
+    } catch (PDOException $e) {
+        flash(var_export($e->errorInfo, true), "danger");
+    }
+
+    return [];
+}
+
+
 ?>

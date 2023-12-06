@@ -125,3 +125,7 @@ div.fav-teams-wrapper {
 table.fav-teams {
     width: 60%;
 }
+
+table.fav-assocs {
+    width: 80%;
+}
