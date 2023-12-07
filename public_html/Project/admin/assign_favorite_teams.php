@@ -7,19 +7,34 @@ if (!has_role("Admin")) {
     die(header("Location: $BASE_PATH" . "/home.php"));
 }
 
+$db = getDB();
+
+$validUsername = true;
+$validTeam = true;
+
 $users = [];
 $teams = [];
+$username = "";
+$teamSearch = "";
 
 if(isset($_POST["username"]) && empty($_POST["username"])){
     flash("Username cannot be empty", "warning");
+    $validUsername = false;
 }
 
 if(isset($_POST["team"]) && empty($_POST["team"])){
     flash("Team cannot be empty", "warning");
+    $validTeam = false;
 }
 
-$username = se($_POST, "username", "", false);
-$team = se($_POST, "team", "", false);
+if($validUsername && $validTeam) {
+    $username = se($_POST, "username", "", false);
+    $teamSearch = se($_POST, "team", "", false);
+
+    $users = get_matching_users($db, ["username"=>$username]);
+    $teams = get_matching_teams($db, ["team"=>$teamSearch]);
+}
+
 
 ?>
 <div class="container-fluid">
@@ -33,27 +48,45 @@ $team = se($_POST, "team", "", false);
         </div>
         <div class="team-filter">
             <label class="form-label" for="team"><h4>Team</h4></label>
-            <input class="form-control w-50" type="text" name="team" id="team" value=<?php se($team) ?>>
+            <input class="form-control w-50" type="text" name="team" id="team" value=<?php se($teamSearch) ?>>
         </div>
         <?php render_button(["type"=>"submit", "text"=>"Search"]); ?>
     </form>
 
-    <?php if ($username !== "" && $team !== "") : ?>
+    <?php if ($username !== "" && $teamSearch !== "") : ?>
     <form method="POST">
         <?php if (isset($username) && !empty($username)) : ?>
             <input type="hidden" name="username" value="<?php se($username, false); ?>" />
-            <input type="hidden" name="team" value="<?php se($team, false); ?>" />
+            <input type="hidden" name="team" value="<?php se($teamSearch, false); ?>" />
         <?php endif; ?>
         <table class="table table-secondary">
             <thead>
-                <th>Users</th>
-                <th>Teams to Favorite</th>
+                <th>Users (<?php se(count($users))?>)</th>
+                <th>Teams to Favorite (<?php se(count($teams))?>)</th>
             </thead>
             <tbody>
                 <tr>
                     <td class="col-6">
+                        <table class="table table-secondary">
+                            <tbody>
+                                <?php foreach ($users as $user) : ?>
+                                    <tr>
+                                        <td><?php se($user["username"]); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
                     </td>
                     <td class="col-6">
+                        <table class="table table-secondary">
+                            <tbody>
+                                <?php foreach ($teams as $team) : ?>
+                                    <tr>
+                                        <td><?php se($team["name"]); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
                     </td>
                 </tr>
             </tbody>

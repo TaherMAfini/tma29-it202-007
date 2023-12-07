@@ -576,4 +576,70 @@ function remove_all_favorite_champ_assoc($db, $params) {
     return false;
 }
 
+function get_matching_users($db, $params) {
+    $query = "SELECT id, username FROM Users WHERE LOWER(username) LIKE LOWER(:username) ORDER BY username ASC LIMIT 25";
+
+    $username = se($params, "username", "", false);
+
+    $stmt = $db->prepare($query);
+
+    $stmt->bindValue(":username", "%$username%", PDO::PARAM_STR);
+
+    try {
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($results) {
+            return $results;
+        }
+    } catch (PDOException $e) {
+        flash(var_export($e->errorInfo, true), "danger");
+    }
+
+    return [];
+}
+
+function get_matching_teams($db, $params) {
+    $query = "SELECT id, name FROM Teams WHERE LOWER(name) LIKE LOWER(:team) ORDER BY name ASC LIMIT 25";
+
+    $team = se($params, "team", "", false);
+
+    $stmt = $db->prepare($query);
+
+    $stmt->bindValue(":team", "%$team%", PDO::PARAM_STR);
+
+    try {
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($results) {
+            return $results;
+        }
+    } catch (PDOException $e) {
+        flash(var_export($e->errorInfo, true), "danger");
+    }
+
+    return [];
+}
+
+function get_matching_championships($db, $params) {
+    $query = "SELECT id, name FROM Championships WHERE LOWER(name) LIKE LOWER(:champ) ORDER BY name ASC LIMIT 25";
+
+    $champ = se($params, "champ", "", false);
+
+    $stmt = $db->prepare($query);
+
+    $stmt->bindValue(":champ", "%$champ%", PDO::PARAM_STR);
+
+    try {
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($results) {
+            return $results;
+        }
+    } catch (PDOException $e) {
+        flash(var_export($e->errorInfo, true), "danger");
+    }
+
+    return [];
+}
+
 ?>
