@@ -37,27 +37,14 @@ if(isset($_POST["users"]) && isset($_POST["champs"])) {
         flash("No championships selected", "warning");
     }
     if(!empty($user_ids) && !empty($champ_ids)) {
-        $values = [];
-        foreach($user_ids as $i => $uid) {
-            foreach($champ_ids as $j => $cid) {
-                $values[] = "(:user_id$i$j, :champ_id$i$j)";
-            }
+        $toggleSuccess = toggle_favorite_championships($db, $user_ids, $champ_ids);
+
+        if($toggleSuccess) {
+            flash("Successfully toggled favorite championships", "success");
         }
-
-        $valString = implode(",", $values);
-
-        echo $valString . "<br>";
-
-        $bindVals = [];
-
-        foreach($user_ids as $i => $uid) {
-            foreach($champ_ids as $j => $cid) {
-                $bindVals[":user_id$i$j"] = $uid;
-                $bindVals[":champ_id$i$j"] = $cid;
-            }
+        else {
+            flash("Error toggling favorite championships", "danger");
         }
-
-        var_export($bindVals);
         
     }
 }
