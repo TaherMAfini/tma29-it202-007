@@ -87,8 +87,8 @@ try {
     <h1><?php se($user, null, "") ?></h1>
 
     <div class="container-fluid mt-5 user-details">
-        <p class="user-profile-items"><strong>Favorite Championships:</strong> <?php se($championships)?></p>
-        <p class="user-profile-items"><strong>Favorite Teams:</strong> <?php se($teams)?></p>
+        <p class="user-profile-items"><strong class="user-profile-categories">Favorite Championships:</strong> <?php se($championships)?></p>
+        <p class="user-profile-items"><strong class="user-profile-categories">Favorite Teams:</strong> <?php se($teams)?></p>
     </div>
 </div>
 

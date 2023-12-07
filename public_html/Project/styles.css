@@ -135,5 +135,9 @@ div.user-details {
 }
 
 p.user-profile-items {
+    font-size: 1.3rem;
+}
+
+strong.user-profile-categories {
     font-size: 1.5rem;
 }
