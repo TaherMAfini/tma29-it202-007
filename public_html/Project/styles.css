@@ -125,3 +125,19 @@ div.fav-teams-wrapper {
 table.fav-teams {
     width: 60%;
 }
+
+table.fav-assocs {
+    width: 80%;
+}
+
+div.user-details {
+    text-align: left;
+}
+
+p.user-profile-items {
+    font-size: 1.3rem;
+}
+
+strong.user-profile-categories {
+    font-size: 1.5rem;
+}

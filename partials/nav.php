@@ -60,7 +60,8 @@ session_start();
                     <a class="dropdown-item" href="<?php echo get_url('admin/update_data.php'); ?>">Update API Data</a>
                     <a class="dropdown-item" href="<?php echo get_url('admin/unassociated_teams.php'); ?>">Unassociated Teams</a>
                     <a class="dropdown-item" href="<?php echo get_url('admin/unassociated_championships.php'); ?>">Unassociated Championships</a>
-
+                    <a class="dropdown-item" href="<?php echo get_url('admin/all_favorite_teams.php'); ?>">All Favorite Teams</a>
+                    <a class="dropdown-item" href="<?php echo get_url('admin/all_favorite_championships.php'); ?>">All Favorite Championships</a>
                 </div>
             </li>
             
