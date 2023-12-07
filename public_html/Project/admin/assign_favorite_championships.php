@@ -27,6 +27,41 @@ if(isset($_POST["team"]) && empty($_POST["team"])){
     $validChampionship = false;
 }
 
+if(isset($_POST["users"]) && isset($_POST["champs"])) {
+    $user_ids = $_POST["users"]; //se() doesn't like arrays so we'll just do this
+    $champ_ids = $_POST["champs"]; //se() doesn't like arrays so we'll just do this
+    if(empty($user_ids)) {
+        flash("No users selected", "warning");
+    }
+    if(empty($champ_ids)) {
+        flash("No championships selected", "warning");
+    }
+    if(!empty($user_ids) && !empty($champ_ids)) {
+        $values = [];
+        foreach($user_ids as $i => $uid) {
+            foreach($champ_ids as $j => $cid) {
+                $values[] = "(:user_id$i$j, :champ_id$i$j)";
+            }
+        }
+
+        $valString = implode(",", $values);
+
+        echo $valString . "<br>";
+
+        $bindVals = [];
+
+        foreach($user_ids as $i => $uid) {
+            foreach($champ_ids as $j => $cid) {
+                $bindVals[":user_id$i$j"] = $uid;
+                $bindVals[":champ_id$i$j"] = $cid;
+            }
+        }
+
+        var_export($bindVals);
+        
+    }
+}
+
 if($validUsername && $validChampionship) {
     $username = se($_POST, "username", "", false);
     $championshipSearch = se($_POST, "championship", "", false);
@@ -70,7 +105,10 @@ if($validUsername && $validChampionship) {
                             <tbody>
                                 <?php foreach ($users as $user) : ?>
                                     <tr>
-                                        <td><?php se($user["username"]); ?></td>
+                                        <td class="form-check px-4">
+                                            <label class="form-check-label" for="user_<?php se($user, "id"); ?>"><?php se($user, "username"); ?></label>
+                                            <input class="form-check-input" id="user_<?php se($user, 'id'); ?>" type="checkbox" name="users[]" value="<?php se($user, 'id'); ?>" />
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -81,7 +119,10 @@ if($validUsername && $validChampionship) {
                             <tbody>
                                 <?php foreach ($championships as $champ) : ?>
                                     <tr>
-                                        <td><?php se($champ["name"]); ?></td>
+                                        <td class="form-check px-4">
+                                            <label class="form-check-label" for="champ_<?php se($champ, "id"); ?>"><?php se($champ, "name"); ?></label>
+                                            <input class="form-check-input" id="champ_<?php se($champ, 'id'); ?>" type="checkbox" name="champs[]" value="<?php se($champ, 'id'); ?>" />
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
