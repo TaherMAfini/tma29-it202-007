@@ -62,6 +62,8 @@ session_start();
                     <a class="dropdown-item" href="<?php echo get_url('admin/unassociated_championships.php'); ?>">Unassociated Championships</a>
                     <a class="dropdown-item" href="<?php echo get_url('admin/all_favorite_teams.php'); ?>">All Favorite Teams</a>
                     <a class="dropdown-item" href="<?php echo get_url('admin/all_favorite_championships.php'); ?>">All Favorite Championships</a>
+                    <a class="dropdown-item" href="<?php echo get_url('admin/assign_favorite_teams.php'); ?>">Assign Favorite Teams</a>
+                    <a class="dropdown-item" href="<?php echo get_url('admin/assign_favorite_championships.php'); ?>">Assign Favorite Championships</a>
                 </div>
             </li>
             

@@ -458,7 +458,7 @@ function get_total_favorited_teams_assoc($db, $params) {
 }
 
 function get_favorited_teams_assoc($db, $params) {
-    $query = "SELECT ft.id as assoc_id, t.id as team_id, t.name as team, u.username as username, u.id as user_id, (SELECT count(*) from FavoriteTeams ft2 WHERE ft2.team_id = ft.team_id ) as count FROM FavoriteTeams ft JOIN Teams t on ft.team_id = t.id JOIN Users u on ft.user_id = u.id WHERE is_active = 1 AND LOWER(u.username) LIKE LOWER(:username) ORDER BY t.name ASC LIMIT :limit OFFSET :offset";
+    $query = "SELECT ft.id as assoc_id, t.id as team_id, t.name as team, u.username as username, u.id as user_id, (SELECT count(*) from FavoriteTeams ft2 WHERE ft2.team_id = ft.team_id AND ft2.is_active = 1) as count FROM FavoriteTeams ft JOIN Teams t on ft.team_id = t.id JOIN Users u on ft.user_id = u.id WHERE is_active = 1 AND LOWER(u.username) LIKE LOWER(:username) ORDER BY t.name ASC LIMIT :limit OFFSET :offset";
 
     $username = se($params, "username", "", false);
 
@@ -528,7 +528,7 @@ function get_total_favorited_champs_assoc($db, $params) {
 }
 
 function get_favorited_champs_assoc($db, $params) {
-    $query = "SELECT fc.id as assoc_id, c.id as champ_id, c.name as champ, u.username as username, u.id as user_id , (SELECT count(*) from FavoriteChampionships fc2 WHERE fc2.champ_id = fc.champ_id ) as count FROM FavoriteChampionships fc JOIN Championships c on fc.champ_id = c.id JOIN Users u on fc.user_id = u.id WHERE is_active = 1 AND LOWER(u.username) LIKE LOWER(:username) ORDER BY c.name ASC LIMIT :limit OFFSET :offset";
+    $query = "SELECT fc.id as assoc_id, c.id as champ_id, c.name as champ, u.username as username, u.id as user_id , (SELECT count(*) from FavoriteChampionships fc2 WHERE fc2.champ_id = fc.champ_id AND fc2.is_active = 1) as count FROM FavoriteChampionships fc JOIN Championships c on fc.champ_id = c.id JOIN Users u on fc.user_id = u.id WHERE is_active = 1 AND LOWER(u.username) LIKE LOWER(:username) ORDER BY c.name ASC LIMIT :limit OFFSET :offset";
 
     $username = se($params, "username", "", false);
 
@@ -565,6 +565,138 @@ function remove_all_favorite_champ_assoc($db, $params) {
     $stmt = $db->prepare($query);
 
     $stmt->bindValue(":username", "%$username%", PDO::PARAM_STR);
+
+    try {
+        $stmt->execute();
+        return true;
+    } catch (PDOException $e) {
+        flash(var_export($e->errorInfo, true), "danger");
+    }
+
+    return false;
+}
+
+function get_matching_users($db, $params) {
+    $query = "SELECT id, username FROM Users WHERE LOWER(username) LIKE LOWER(:username) ORDER BY username ASC LIMIT 25";
+
+    $username = se($params, "username", "", false);
+
+    $stmt = $db->prepare($query);
+
+    $stmt->bindValue(":username", "%$username%", PDO::PARAM_STR);
+
+    try {
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($results) {
+            return $results;
+        }
+    } catch (PDOException $e) {
+        flash(var_export($e->errorInfo, true), "danger");
+    }
+
+    return [];
+}
+
+function get_matching_teams($db, $params) {
+    $query = "SELECT id, name FROM Teams WHERE LOWER(name) LIKE LOWER(:team) ORDER BY name ASC LIMIT 25";
+
+    $team = se($params, "team", "", false);
+
+    $stmt = $db->prepare($query);
+
+    $stmt->bindValue(":team", "%$team%", PDO::PARAM_STR);
+
+    try {
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($results) {
+            return $results;
+        }
+    } catch (PDOException $e) {
+        flash(var_export($e->errorInfo, true), "danger");
+    }
+
+    return [];
+}
+
+function get_matching_championships($db, $params) {
+    $query = "SELECT id, name FROM Championships WHERE LOWER(name) LIKE LOWER(:champ) ORDER BY name ASC LIMIT 25";
+
+    $champ = se($params, "champ", "", false);
+
+    $stmt = $db->prepare($query);
+
+    $stmt->bindValue(":champ", "%$champ%", PDO::PARAM_STR);
+
+    try {
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($results) {
+            return $results;
+        }
+    } catch (PDOException $e) {
+        flash(var_export($e->errorInfo, true), "danger");
+    }
+
+    return [];
+}
+
+function toggle_favorite_teams($db, $user_ids, $team_ids) {
+    $query = "INSERT INTO FavoriteTeams (user_id, team_id, is_active) VALUES  ";
+
+    $values = [];
+    foreach($user_ids as $i => $uid) {
+        foreach($team_ids as $j => $tid) {
+            $values[] = "(:user_id$i$j, :team_id$i$j, 1)";
+        }
+    }
+
+    $query .= implode(",", $values);
+
+    $query .= " ON DUPLICATE KEY UPDATE is_active = !is_active";
+
+    $stmt = $db->prepare($query);
+
+    foreach($user_ids as $i => $uid) {
+        foreach($team_ids as $j => $tid) {
+            $stmt->bindValue(":user_id$i$j", $uid, PDO::PARAM_INT);
+            $stmt->bindValue(":team_id$i$j", $tid, PDO::PARAM_INT);
+        }
+    }
+
+    try {
+        $stmt->execute();
+        return true;
+    } catch (PDOException $e) {
+        flash(var_export($e->errorInfo, true), "danger");
+    }
+
+    return false;
+}
+
+function toggle_favorite_championships($db, $user_ids, $champ_ids) {
+    $query = "INSERT INTO FavoriteChampionships (user_id, champ_id, is_active) VALUES  ";
+
+    $values = [];
+    foreach($user_ids as $i => $uid) {
+        foreach($champ_ids as $j => $cid) {
+            $values[] = "(:user_id$i$j, :champ_id$i$j, 1)";
+        }
+    }
+
+    $query .= implode(",", $values);
+
+    $query .= " ON DUPLICATE KEY UPDATE is_active = !is_active";
+
+    $stmt = $db->prepare($query);
+
+    foreach($user_ids as $i => $uid) {
+        foreach($champ_ids as $j => $cid) {
+            $stmt->bindValue(":user_id$i$j", $uid, PDO::PARAM_INT);
+            $stmt->bindValue(":champ_id$i$j", $cid, PDO::PARAM_INT);
+        }
+    }
 
     try {
         $stmt->execute();
