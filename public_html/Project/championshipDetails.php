@@ -1,5 +1,5 @@
-//Taher Afini, tma29
-//Display details of selected championship
+<!-- Taher Afini, tma29
+Display details of selected championship -->
 
 <?php
 require(__DIR__ . "/../../partials/nav.php");

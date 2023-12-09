@@ -1,5 +1,7 @@
-//Taher Afini, tma29
-// Display all user-team favorite pairs with links to team details, link to user profile and link to remove from favorites
+<!--
+Taher Afini, tma29
+Display all user-team favorite pairs with links to team details, link to user profile and link to remove from favorites
+-->
 
 <?php
 //note we need to go up 1 more directory
@@ -123,8 +125,10 @@ function get_profile_url($user_id) {
         </ul>
     </div>
 
-//Taher Afini, tma29
-// Display all user-team favorited pairs with a link to team details, link to user profile and link to remove from favorites as well as a count of how many users have favorited the team
+<!--
+Taher Afini, tma29
+Display all user-team favorited pairs with a link to team details, link to user profile and link to remove from favorites as well as a count of how many users have favorited the team
+-->
     <div class="row justify-content-center">
         <table class="table table-secondary fav-assocs">
             <thead>

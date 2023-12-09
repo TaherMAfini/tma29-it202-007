@@ -1,5 +1,5 @@
-//Taher Afini, tma29
-// Display all teams that are not favorited by any users
+<!-- Taher Afini, tma29
+Display all teams that are not favorited by any users -->
 
 <?php
 //note we need to go up 1 more directory
@@ -92,8 +92,8 @@ function get_page_url($page) {
         </ul>
     </div>
 
-//Taher Afini, tma29
-// Display all teams that are not favorited by any users with a link for details
+<!-- Taher Afini, tma29
+Display all teams that are not favorited by any users with a link for details -->
 
     <div class="row justify-content-center">
         <table class="table table-secondary fav-teams">

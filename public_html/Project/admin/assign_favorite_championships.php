@@ -1,5 +1,6 @@
-//Taher Afini, tma29
-// This page allows the admin to toggle the favorite teams of users
+<!-- 
+    Taher Afini, tma29
+    This page allows the admin to toggle the favorite teams of users -->
 
 <?php
 //note we need to go up 1 more directory
@@ -68,8 +69,8 @@ if($validUsername && $validChampionship) {
 
     <h1>Assign Favorite Teams</h1>
 
-    //Taher Afini, tma29
-    //Username and Championship partial match search
+    <!-- Taher Afini, tma29
+    Username and Championship partial match search -->
     <form method="POST" class="list-filter mt-5">
         <div class="team-filter">
             <label class="form-label" for="username"><h4>Username</h4></label>
@@ -82,8 +83,8 @@ if($validUsername && $validChampionship) {
         <?php render_button(["type"=>"submit", "text"=>"Search"]); ?>
     </form>
 
-    //Taher Afini, tma29
-    //Table with users and championships (max 25 of each) with checkboxes to toggle favorite championships
+    <!-- Taher Afini, tma29
+    Table with users and championships (max 25 of each) with checkboxes to toggle favorite championships -->
     <?php if ($username !== "" && $championshipSearch !== "") : ?>
     <form method="POST">
         <?php if (isset($username) && !empty($username)) : ?>

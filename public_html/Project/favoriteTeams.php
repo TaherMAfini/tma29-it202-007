@@ -1,5 +1,5 @@
-//Taher Afini, tma29
-//This page allows the user to view their favorite teams and remove them from their favorites list
+<!-- Taher Afini, tma29
+This page allows the user to view their favorite teams and remove them from their favorites list -->
 
 <?php
 require(__DIR__ . "/../../partials/nav.php");
@@ -77,15 +77,15 @@ function get_page_url($page) {
 
 <h1>Favorite Teams (<?php echo $total ?>)</h1>
 
-//Taher Afini, tma29
-//Remove all favorites button
+<!-- Taher Afini, tma29
+Remove all favorites button -->
 <form method="POST">
     <input type="hidden" name="removeAll" value="removeAll" />
     <button class="btn btn-danger" type="submit" >Remove All Favorites</button>
 </form>
 
-//Taher Afini, tma29
-//Filtering 
+<!-- Taher Afini, tma29
+Filtering  -->
 <form method="GET" class="list-filter mt-5">
     <div class="team-filter">
         <label class="form-label" for="team"><h4>Team</h4></label>
@@ -104,11 +104,11 @@ function get_page_url($page) {
     </div>
 </form>
 
-//Taher Afini, tma29
-//Display number of items on current page
+<!-- Taher Afini, tma29
+Display number of items on current page -->
 <h3>Items on Page: <?php se(count($teams))?></h3>
 
-// Pagination
+<!-- Pagination -->
 <div>
     <ul class="pagination justify-content-center">
         <li class="page-item <?php disable_prev(($page-1))?>">
@@ -123,7 +123,7 @@ function get_page_url($page) {
     </ul>
 </div>
 
-//Table with favorite teams and links to details and delete
+<!-- Table with favorite teams and links to details and delete -->
 <div class="row justify-content-center">
     <table class="table table-secondary fav-teams">
         <thead>

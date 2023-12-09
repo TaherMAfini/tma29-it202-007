@@ -1,5 +1,5 @@
-//Taher Afini, tma29
-// This page allows the admin to toggle the favorite teams of users
+<!-- Taher Afini, tma29
+This page allows the admin to toggle the favorite teams of users -->
 
 <?php
 //note we need to go up 1 more directory
@@ -68,8 +68,8 @@ if($validUsername && $validTeam) {
 
     <h1>Assign Favorite Teams</h1>
 
-    //Taher Afini, tma29
-    //Username and team partial match search
+    <!-- Taher Afini, tma29
+    Username and team partial match search -->
     <form method="POST" class="list-filter mt-5">
         <div class="team-filter">
             <label class="form-label" for="username"><h4>Username</h4></label>
@@ -82,7 +82,8 @@ if($validUsername && $validTeam) {
         <?php render_button(["type"=>"submit", "text"=>"Search"]); ?>
     </form>
 
-    //Table with users and teams (max 25 of each) with checkboxes to toggle favorite teams
+    <!-- Taher Afini, tma29        
+    Table with users and teams (max 25 of each) with checkboxes to toggle favorite teams -->
     <?php if ($username !== "" && $teamSearch !== "") : ?>
     <form method="POST">
         <?php if (isset($username) && !empty($username)) : ?>

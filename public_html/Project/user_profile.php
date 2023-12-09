@@ -1,5 +1,5 @@
-//Taher Afini, tma29
-//User public profile. Display details of the selected user including username, favorite championships, and favorite teams
+<!-- Taher Afini, tma29
+User public profile. Display details of the selected user including username, favorite championships, and favorite teams -->
 
 <?php
 require(__DIR__ . "/../../partials/nav.php");
