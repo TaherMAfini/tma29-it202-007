@@ -1,5 +1,5 @@
-//Taher Afini, tma29
-//Display details of the selected team including team name and manager name
+<!-- Taher Afini, tma29
+Display details of the selected team including team name and manager name -->
 
 <?php
 require(__DIR__ . "/../../partials/nav.php");

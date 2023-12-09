@@ -1,5 +1,5 @@
-//Taher Afini, tma29
-//This page allows the user to view all of their favorited championships. They can also remove all of their favorited championships at once.
+<!-- Taher Afini, tma29
+This page allows the user to view all of their favorited championships. They can also remove all of their favorited championships at once. -->
 
 <?php
 require(__DIR__ . "/../../partials/nav.php");
@@ -77,15 +77,15 @@ function get_page_url($page) {
 
 <h1>Favorite Championships (<?php echo $total ?>)</h1>
 
-//Taher Afini, tma29
-//Remove all favorite championships.
+<!-- Taher Afini, tma29
+Remove all favorite championships. -->
 <form method="POST">
     <input type="hidden" name="removeAll" value="removeAll" />
     <button class="btn btn-danger" type="submit" >Remove All Favorites</button>
 </form>
 
-//Taher Afini, tma29
-//Filtering
+<!-- Taher Afini, tma29
+Filtering -->
 <form method="GET" class="list-filter mt-5">
     <div class="team-filter">
         <label class="form-label" for="team"><h4>Championship</h4></label>
@@ -104,11 +104,11 @@ function get_page_url($page) {
     </div>
 </form>
 
-//Taher Afini, tma29
-//Total number of items on current page.
+<!-- Taher Afini, tma29
+Total number of items on current page. -->
 <h3>Items on Page: <?php se(count($championships))?></h3>
 
-//Pagination
+<!-- Pagination -->
 <div>
     <ul class="pagination justify-content-center">
         <li class="page-item <?php disable_prev(($page-1))?>">
@@ -124,8 +124,8 @@ function get_page_url($page) {
 </div>
 
 
-//Taher Afini, tma29
-//Display all favorited championships with links to details and remove from favorites.
+<!-- Taher Afini, tma29
+Display all favorited championships with links to details and remove from favorites. -->
 <div class="row justify-content-center">
     <table class="table table-secondary fav-teams">
         <thead>

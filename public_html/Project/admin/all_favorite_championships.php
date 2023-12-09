@@ -1,7 +1,7 @@
-//Taher Afini, tma29
-// Display all user-championship favorite pairs with links to championship details, link to user profile and link to remove from favorites
-
-
+<!--
+Taher Afini, tma29
+Display all user-championship favorite pairs with links to championship details, link to user profile and link to remove from favorites
+-->
 <?php
 //note we need to go up 1 more directory
 require(__DIR__ . "/../../../partials/nav.php");
@@ -122,9 +122,10 @@ function get_profile_url($user_id) {
             </li>
         </ul>
     </div>
-
-//Taher Afini, tma29
-// Display all user-championship favorited pairs with a link to championship details, link to user profile and link to remove from favorites as well as a count of how many users have favorited the championship
+<!--
+Taher Afini, tma29
+Display all user-championship favorited pairs with a link to championship details, link to user profile and link to remove from favorites as well as a count of how many users have favorited the championship
+-->
     <div class="row justify-content-center">
         <table class="table table-secondary fav-assocs">
             <thead>
