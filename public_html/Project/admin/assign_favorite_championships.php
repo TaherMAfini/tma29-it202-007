@@ -1,6 +1,6 @@
 <!-- 
     Taher Afini, tma29
-    This page allows the admin to toggle the favorite teams of users -->
+    This page allows the admin to toggle the favorite championships of users -->
 
 <?php
 //note we need to go up 1 more directory
@@ -26,8 +26,8 @@ if(isset($_POST["username"]) && empty($_POST["username"])){
     $validUsername = false;
 }
 
-if(isset($_POST["team"]) && empty($_POST["team"])){
-    flash("Team cannot be empty", "warning");
+if(isset($_POST["championship"]) && empty($_POST["championship"])){
+    flash("Championship cannot be empty", "warning");
     $validChampionship = false;
 }
 
@@ -67,7 +67,7 @@ if($validUsername && $validChampionship) {
 ?>
 <div class="container-fluid">
 
-    <h1>Assign Favorite Teams</h1>
+    <h1>Assign Favorite Championships</h1>
 
     <!-- Taher Afini, tma29
     Username and Championship partial match search -->
@@ -129,7 +129,7 @@ if($validUsername && $validChampionship) {
                 </tr>
             </tbody>
         </table>
-        <?php render_button(["type"=>"submit", "text"=>"Toggle Favorite Teams"]); ?>
+        <?php render_button(["type"=>"submit", "text"=>"Toggle Favorite Championships"]); ?>
     </form>
     <?php endif; ?>
 
