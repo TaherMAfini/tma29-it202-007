@@ -81,7 +81,7 @@ function get_profile_url($user_id) {
 
     <form method="GET" class="list-filter mt-5">
         <div class="team-filter">
-            <label class="form-label" for="team"><h4>Username</h4></label>
+            <label class="form-label" for="username"><h4>Username</h4></label>
             <input class="form-control w-50" type="text" name="username" value="<?php se($username) ?>" />
         </div>
         <div class="limit">
