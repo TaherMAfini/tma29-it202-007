@@ -1,3 +1,6 @@
+//Taher Afini, tma29
+// This page allows the admin to toggle the favorite teams of users
+
 <?php
 //note we need to go up 1 more directory
 require(__DIR__ . "/../../../partials/nav.php");
@@ -27,6 +30,8 @@ if(isset($_POST["team"]) && empty($_POST["team"])){
     $validChampionship = false;
 }
 
+//Taher Afini, tma29
+// Handle toggle form submission
 if(isset($_POST["users"]) && isset($_POST["champs"])) {
     $user_ids = $_POST["users"]; //se() doesn't like arrays so we'll just do this
     $champ_ids = $_POST["champs"]; //se() doesn't like arrays so we'll just do this
@@ -57,11 +62,14 @@ if($validUsername && $validChampionship) {
     $championships = get_matching_championships($db, ["champ"=>$championshipSearch]);
 }
 
+
 ?>
 <div class="container-fluid">
 
     <h1>Assign Favorite Teams</h1>
 
+    //Taher Afini, tma29
+    //Username and Championship partial match search
     <form method="POST" class="list-filter mt-5">
         <div class="team-filter">
             <label class="form-label" for="username"><h4>Username</h4></label>
@@ -74,6 +82,8 @@ if($validUsername && $validChampionship) {
         <?php render_button(["type"=>"submit", "text"=>"Search"]); ?>
     </form>
 
+    //Taher Afini, tma29
+    //Table with users and championships (max 25 of each) with checkboxes to toggle favorite championships
     <?php if ($username !== "" && $championshipSearch !== "") : ?>
     <form method="POST">
         <?php if (isset($username) && !empty($username)) : ?>

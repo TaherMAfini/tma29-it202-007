@@ -1,3 +1,5 @@
+//Taher Afini, tma29
+// Remove the selected team from favorites
 <?php 
 require(__DIR__ . "/../../partials/nav.php");
 

@@ -1,3 +1,5 @@
+//Taher Afini, tma29
+//Add selected team to favorites (no ui, request and return only)
 <?php 
 require(__DIR__ . "/../../partials/nav.php");
 
