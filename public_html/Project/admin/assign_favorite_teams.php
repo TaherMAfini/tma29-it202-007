@@ -1,3 +1,6 @@
+//Taher Afini, tma29
+// This page allows the admin to toggle the favorite teams of users
+
 <?php
 //note we need to go up 1 more directory
 require(__DIR__ . "/../../../partials/nav.php");
@@ -27,6 +30,8 @@ if(isset($_POST["team"]) && empty($_POST["team"])){
     $validTeam = false;
 }
 
+//Taher Afini, tma29
+// Handle toggle form submission
 if(isset($_POST["users"]) && isset($_POST["teams"])) {
     $user_ids = $_POST["users"]; //se() doesn't like arrays so we'll just do this
     $team_ids = $_POST["teams"]; //se() doesn't like arrays so we'll just do this
@@ -63,6 +68,8 @@ if($validUsername && $validTeam) {
 
     <h1>Assign Favorite Teams</h1>
 
+    //Taher Afini, tma29
+    //Username and team partial match search
     <form method="POST" class="list-filter mt-5">
         <div class="team-filter">
             <label class="form-label" for="username"><h4>Username</h4></label>
@@ -75,6 +82,7 @@ if($validUsername && $validTeam) {
         <?php render_button(["type"=>"submit", "text"=>"Search"]); ?>
     </form>
 
+    //Table with users and teams (max 25 of each) with checkboxes to toggle favorite teams
     <?php if ($username !== "" && $teamSearch !== "") : ?>
     <form method="POST">
         <?php if (isset($username) && !empty($username)) : ?>

@@ -1,3 +1,6 @@
+//Taher Afini, tma29
+// Display all user-team favorite pairs with links to team details, link to user profile and link to remove from favorites
+
 <?php
 //note we need to go up 1 more directory
 require(__DIR__ . "/../../../partials/nav.php");
@@ -9,6 +12,7 @@ if (!has_role("Admin")) {
 
 $db = getDB();
 
+//Handle removal of all favorite teams for users that partially match the filter
 if(isset($_POST["action"]) && $_POST["action"] == "delete_all") {
     
     $removeAll = remove_all_favorite_team_assoc($db, ["username"=>$_POST["username"]]);
@@ -63,6 +67,7 @@ function get_page_url($page) {
     echo http_build_query($filter_params) . "&page=" . $page;
 }
 
+//Get the url for a user's public profile
 function get_profile_url($user_id) {
     $params = [];
     $params["id"] = $user_id;
@@ -118,6 +123,8 @@ function get_profile_url($user_id) {
         </ul>
     </div>
 
+//Taher Afini, tma29
+// Display all user-team favorited pairs with a link to team details, link to user profile and link to remove from favorites as well as a count of how many users have favorited the team
     <div class="row justify-content-center">
         <table class="table table-secondary fav-assocs">
             <thead>

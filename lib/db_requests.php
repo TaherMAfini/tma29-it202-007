@@ -141,6 +141,9 @@ function get_results($db, $params) {
 
 }
 
+
+//Taher Afini, tma29
+// Get the total number of active favorite teams for the current user (with and without name filter)
 function get_total_favorite_teams($db, $params) {
     $query = "SELECT count(*) as total FROM FavoriteTeams WHERE user_id = :userID AND is_active = 1 AND team_id IN (SELECT id FROM Teams WHERE LOWER(name) LIKE LOWER(:teamName))";
 
@@ -163,7 +166,8 @@ function get_total_favorite_teams($db, $params) {
 
     return 0;
 }
-
+//Taher Afini, tma29
+// Get the active favorite teams for the current user (with and without name filter)
 function get_favorite_teams($db, $params) {
     $query = "SELECT ft.id as assoc_id, t.id as team_id, t.name as name FROM FavoriteTeams ft JOIN Teams t on ft.team_id = t.id WHERE user_id = :userID AND ft.is_active = 1 AND LOWER(name) LIKE LOWER(:teamName) ORDER BY t.name ASC";
 
@@ -202,6 +206,8 @@ function get_favorite_teams($db, $params) {
 
 }
 
+//Taher Afini, tma29
+// Get the total number of active favorite championships for the current user (with and without name filter)
 function get_total_favorite_championships($db, $params) {
     $query = "SELECT count(*) as total FROM FavoriteChampionships WHERE user_id = :userID AND is_active = 1 AND champ_id IN (SELECT id FROM Championships WHERE LOWER(name) LIKE LOWER(:champName))";
 
@@ -225,6 +231,8 @@ function get_total_favorite_championships($db, $params) {
     return 0;
 }
 
+//Taher Afini, tma29
+// Get the active favorite championships for the current user (with and without name filter)
 function get_favorite_championships($db, $params) {
     $query = "SELECT fc.id as assoc_id, c.id as champ_id, c.name as name FROM FavoriteChampionships fc JOIN Championships c on fc.champ_id = c.id WHERE user_id = :userID AND fc.is_active = 1 AND LOWER(name) LIKE LOWER(:champName) ORDER by c.name ASC";
 
@@ -263,6 +271,8 @@ function get_favorite_championships($db, $params) {
 
 }
 
+//Taher Afini, tma29
+// Get the total number of teams which are not favorited by any user (with and without name filter)
 function get_total_unassociated_teams($db, $params) {
     $query = "SELECT count(*) as total FROM Teams WHERE id NOT IN (SELECT DISTINCT team_id FROM FavoriteTeams WHERE is_active = 1) AND LOWER(name) LIKE LOWER(:teamName)";
 
@@ -284,6 +294,8 @@ function get_total_unassociated_teams($db, $params) {
     return 0;
 }
 
+//Taher Afini, tma29
+// Get the teams which are not favorited by any user (with and without name filter)
 function get_unassociated_teams($db, $params) {
     $query = "SELECT id, name FROM Teams WHERE id NOT IN (SELECT DISTINCT team_id FROM FavoriteTeams WHERE is_active = 1) AND LOWER(name) LIKE LOWER(:teamName) ORDER BY name ASC";
 
@@ -320,6 +332,8 @@ function get_unassociated_teams($db, $params) {
 
 }
 
+//Taher Afini, tma29
+// Get the total number of championships which are not favorited by any user (with and without name filter)
 function get_total_unassociated_championships($db, $params) {
     $query = "SELECT count(*) as total FROM Championships WHERE id NOT IN (SELECT DISTINCT champ_id FROM FavoriteChampionships WHERE is_active = 1) AND LOWER(name) LIKE LOWER(:champName)";
 
@@ -341,6 +355,8 @@ function get_total_unassociated_championships($db, $params) {
     return 0;
 }
 
+//Taher Afini, tma29
+// Get the championships which are not favorited by any user (with and without name filter)
 function get_unassociated_championships($db, $params) {
     $query = "SELECT id, name FROM Championships WHERE id NOT IN (SELECT DISTINCT champ_id FROM FavoriteChampionships WHERE is_active = 1) AND LOWER(name) LIKE LOWER(:champName) ORDER BY name ASC";
 
@@ -376,6 +392,8 @@ function get_unassociated_championships($db, $params) {
     return [];
 }
 
+//Taher Afini, tma29
+// Get the total number of favorite matches for the current user (with and without team and championship filter)
 function get_total_favorite_matches($db, $params) {
     $queryT = "SELECT count(m.id) FROM Matches m JOIN Teams t1 ON t1.id = m.team1_id JOIN Teams t2 ON t2.id = m.team2_id JOIN Championships c ON c.id = m.championship_id WHERE (c.id IN (SELECT DISTINCT champ_id FROM FavoriteChampionships WHERE is_active = 1 AND user_id = :userID) OR t1.id IN (SELECT DISTINCT team_id FROM FavoriteTeams WHERE is_active = 1 AND user_id = :userID) OR t2.id IN (SELECT DISTINCT team_id FROM FavoriteTeams WHERE is_active = 1 AND user_id = :userID)) AND LOWER(c.name) LIKE LOWER(:champ) AND (LOWER(t1.name) LIKE LOWER(:team) OR LOWER(t2.name) LIKE LOWER(:team))";
 
@@ -402,6 +420,8 @@ function get_total_favorite_matches($db, $params) {
     return 0;
 }
 
+//Taher Afini, tma29
+// Get the favorite matches for the current user (with and without team and championship filter)
 function get_favorite_matches($db, $params) {
     $queryT = "SELECT  m.id, m.championship_id, t1.name as team1, m.score1, t2.name as team2, m.score2, m.date FROM Matches m JOIN Teams t1 ON t1.id = m.team1_id JOIN Teams t2 ON t2.id = m.team2_id JOIN Championships c ON c.id = m.championship_id WHERE (c.id IN (SELECT DISTINCT champ_id FROM FavoriteChampionships WHERE is_active = 1 AND user_id = :userID) OR t1.id IN (SELECT DISTINCT team_id FROM FavoriteTeams WHERE is_active = 1 AND user_id = :userID) OR t2.id IN (SELECT DISTINCT team_id FROM FavoriteTeams WHERE is_active = 1 AND user_id = :userID)) AND LOWER(c.name) LIKE LOWER(:champ) AND (LOWER(t1.name) LIKE LOWER(:team) OR LOWER(t2.name) LIKE LOWER(:team)) LIMIT :limit OFFSET :offset";
 
@@ -436,6 +456,8 @@ function get_favorite_matches($db, $params) {
     return [];
 }
 
+//Taher Afini, tma29
+// Get the total number of user-team associations that are active (with and without user filter)
 function get_total_favorited_teams_assoc($db, $params) {
     $query = "SELECT count(*) FROM FavoriteTeams WHERE is_active = 1 AND user_id IN (SELECT id FROM Users WHERE LOWER(username) LIKE LOWER(:username))";
 
@@ -457,6 +479,8 @@ function get_total_favorited_teams_assoc($db, $params) {
     return 0;
 }
 
+//Taher Afini, tma29
+// Get the user-team associations that are active (with and without user filter)
 function get_favorited_teams_assoc($db, $params) {
     $query = "SELECT ft.id as assoc_id, t.id as team_id, t.name as team, u.username as username, u.id as user_id, (SELECT count(*) from FavoriteTeams ft2 WHERE ft2.team_id = ft.team_id AND ft2.is_active = 1) as count FROM FavoriteTeams ft JOIN Teams t on ft.team_id = t.id JOIN Users u on ft.user_id = u.id WHERE is_active = 1 AND LOWER(u.username) LIKE LOWER(:username) ORDER BY t.name ASC LIMIT :limit OFFSET :offset";
 
@@ -487,6 +511,8 @@ function get_favorited_teams_assoc($db, $params) {
     return [];
 }
 
+//Taher Afini, tma29
+// Remove all user-team associations where the username matches the filter
 function remove_all_favorite_team_assoc($db, $params) {
     $query = "UPDATE FavoriteTeams SET is_active = 0 WHERE user_id IN (SELECT id FROM Users WHERE LOWER(username) LIKE LOWER(:username))";
 
@@ -506,6 +532,8 @@ function remove_all_favorite_team_assoc($db, $params) {
     return false;
 }
 
+//Taher Afini, tma29
+// Get the total number of user-championship associations that are active (with and without user filter)
 function get_total_favorited_champs_assoc($db, $params) {
     $query = "SELECT count(*) FROM FavoriteChampionships WHERE is_active = 1 AND user_id IN (SELECT id FROM Users WHERE LOWER(username) LIKE LOWER(:username))";
 
@@ -527,6 +555,8 @@ function get_total_favorited_champs_assoc($db, $params) {
     return 0;
 }
 
+//Taher Afini, tma29
+// Get the user-championship associations that are active (with and without user filter)
 function get_favorited_champs_assoc($db, $params) {
     $query = "SELECT fc.id as assoc_id, c.id as champ_id, c.name as champ, u.username as username, u.id as user_id , (SELECT count(*) from FavoriteChampionships fc2 WHERE fc2.champ_id = fc.champ_id AND fc2.is_active = 1) as count FROM FavoriteChampionships fc JOIN Championships c on fc.champ_id = c.id JOIN Users u on fc.user_id = u.id WHERE is_active = 1 AND LOWER(u.username) LIKE LOWER(:username) ORDER BY c.name ASC LIMIT :limit OFFSET :offset";
 
@@ -557,6 +587,8 @@ function get_favorited_champs_assoc($db, $params) {
     return [];
 }
 
+//Taher Afini, tma29
+// Remove all user-championship associations where the username matches the filter
 function remove_all_favorite_champ_assoc($db, $params) {
     $query = "UPDATE FavoriteChampionships SET is_active = 0 WHERE user_id IN (SELECT id FROM Users WHERE LOWER(username) LIKE LOWER(:username))";
 
@@ -576,6 +608,8 @@ function remove_all_favorite_champ_assoc($db, $params) {
     return false;
 }
 
+//Taher Afini, tma29
+// Get the usernames of users which match the filter
 function get_matching_users($db, $params) {
     $query = "SELECT id, username FROM Users WHERE LOWER(username) LIKE LOWER(:username) ORDER BY username ASC LIMIT 25";
 
@@ -598,6 +632,8 @@ function get_matching_users($db, $params) {
     return [];
 }
 
+//Taher Afini, tma29
+// Get the teams that match the filter
 function get_matching_teams($db, $params) {
     $query = "SELECT id, name FROM Teams WHERE LOWER(name) LIKE LOWER(:team) ORDER BY name ASC LIMIT 25";
 
@@ -620,6 +656,8 @@ function get_matching_teams($db, $params) {
     return [];
 }
 
+//Taher Afini, tma29
+// Get the championships that match the filter
 function get_matching_championships($db, $params) {
     $query = "SELECT id, name FROM Championships WHERE LOWER(name) LIKE LOWER(:champ) ORDER BY name ASC LIMIT 25";
 
@@ -642,6 +680,8 @@ function get_matching_championships($db, $params) {
     return [];
 }
 
+//Taher Afini, tma29
+// Toggle all user-team associations where the username and team matches the filter
 function toggle_favorite_teams($db, $user_ids, $team_ids) {
     $query = "INSERT INTO FavoriteTeams (user_id, team_id, is_active) VALUES  ";
 
@@ -675,6 +715,8 @@ function toggle_favorite_teams($db, $user_ids, $team_ids) {
     return false;
 }
 
+//Taher Afini, tma29
+// Toggle all user-championship associations where the username and championship matches the filter
 function toggle_favorite_championships($db, $user_ids, $champ_ids) {
     $query = "INSERT INTO FavoriteChampionships (user_id, champ_id, is_active) VALUES  ";
 

@@ -1,3 +1,6 @@
+//Taher Afini, tma29
+// Show all matches from favorite championships or containing a favorite team
+
 <?php
 require(__DIR__ . "/../../partials/nav.php");
 
@@ -91,6 +94,8 @@ function get_page_url($page) {
     </ul>
 </div>
 
+//Taher Afini, tma29
+// Display all matches from favorite championships or containing a favorite team (latest first) and links to match details
 <table class="table table-secondary">
     <thead>
         <th>Date</th>

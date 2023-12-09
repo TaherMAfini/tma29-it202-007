@@ -55,6 +55,9 @@ try {
         <div class="container-fluid matchDetails mb-3">
             <h5><?php se($date)?></h5>
             <h2><?php se($championship)?></h2>
+
+            //Taher Afini, tma29
+            // Form and button to add championship to favorites
             <form class="form mx-3 details-button" method="GET" action="addFavoriteChampionship.php">
                 <input class="form-control" type="hidden" name="champID" value="<?php se($champ_id)?>">
                 <input class="form-control" type="hidden" name="champName" value="<?php se($championship)?>">
@@ -66,6 +69,8 @@ try {
             <?php endif ?>
         </div>
         <div class="container-fluid team">
+            //Taher Afini, tma29
+            // Form and button to add team 1 to favorites
             <form class="form mx-3 details-button" method="GET" action="addFavoriteTeam.php">
                 <input class="form-control" type="hidden" name="teamID" value="<?php se($team1_id)?>">
                 <input class="form-control" type="hidden" name="teamName" value="<?php se($team1)?>">
@@ -80,6 +85,8 @@ try {
             <h2><?php se($score1)?></h2>
         </div>
         <div class="container-fluid team">
+            //Taher Afini, tma29
+            // Form and button to add team 1 to favorites
             <form class="form mx-3 details-button" method="GET" action="addFavoriteTeam.php">
                 <input class="form-control" type="hidden" name="teamID" value="<?php se($team2_id)?>">
                 <input class="form-control" type="hidden" name="teamName" value="<?php se($team2)?>">

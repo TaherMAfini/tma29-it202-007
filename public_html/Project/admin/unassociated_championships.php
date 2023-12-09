@@ -1,3 +1,6 @@
+//Taher Afini, tma29
+// Display all championships not favorited by any users
+
 <?php
 //note we need to go up 1 more directory
 require(__DIR__ . "/../../../partials/nav.php");
@@ -88,6 +91,9 @@ function get_page_url($page) {
             </li>
         </ul>
     </div>
+    
+//Taher Afini, tma29
+// Display all championships that are not favorited by any users with a link for details
 
     <div class="row justify-content-center">
         <table class="table table-secondary fav-teams">
