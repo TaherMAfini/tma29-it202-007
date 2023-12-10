@@ -1,6 +1,5 @@
 <!-- Taher Afini, tma29
 Remove the selected championship from favorites -->
-
 <?php 
 require(__DIR__ . "/../../partials/nav.php");
 
@@ -31,12 +30,9 @@ if(!isset($_GET["champID"])) {
     die(header("Location: " . $return_path . $return_url));
 }
 
-var_export($_GET);
-
 $champID = (int)se($_GET, "champID", -1, false);
 $champName = se($_GET, "champName", "", false);
 $userID = (int)se($_GET, "userID", "", false);
-
 if(!isset($_GET["userID"])) {
     $userID = get_user_id();
 }
@@ -46,10 +42,8 @@ $db = getDB();
 $query = "UPDATE FavoriteChampionships SET is_active = 0 WHERE champ_id = :champID AND user_id = :userID";
 
 $stmt = $db->prepare($query);
-
 $stmt->bindValue(":userID", $userID, PDO::PARAM_INT);
 $stmt->bindValue(":champID", $champID, PDO::PARAM_INT);
-
 
 try {
     $stmt->execute();

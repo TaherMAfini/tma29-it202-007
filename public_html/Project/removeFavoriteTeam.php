@@ -2,7 +2,6 @@
 Remove the selected team from favorites -->
 <?php 
 require(__DIR__ . "/../../partials/nav.php");
-
 if (is_logged_in(true)) {
     //comment this out if you don't want to see the session variables
     error_log("Session data: " . var_export($_SESSION, true));
@@ -33,7 +32,6 @@ if(!isset($_GET["teamID"])) {
 $teamID = (int)se($_GET, "teamID", -1, false);
 $teamName = se($_GET, "teamName", "", false);
 $userID = (int)se($_GET, "userID", "", false);
-
 if(!isset($_GET["userID"])) {
     $userID = get_user_id();
 }
@@ -43,10 +41,8 @@ $db = getDB();
 $query = "UPDATE FavoriteTeams SET is_active = 0 WHERE team_id = :teamID AND user_id = :userID";
 
 $stmt = $db->prepare($query);
-
 $stmt->bindValue(":userID", $userID, PDO::PARAM_INT);
 $stmt->bindValue(":teamID", $teamID, PDO::PARAM_INT);
-
 
 try {
     $stmt->execute();

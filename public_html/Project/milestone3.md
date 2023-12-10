@@ -1,6 +1,6 @@
 <table><tr><td> <em>Assignment: </em> IT202 Milestone 3 API Project</td></tr>
 <tr><td> <em>Student: </em> Taher Afini (tma29)</td></tr>
-<tr><td> <em>Generated: </em> 12/9/2023 6:08:45 PM</td></tr>
+<tr><td> <em>Generated: </em> 12/10/2023 6:03:07 PM</td></tr>
 <tr><td> <em>Grading Link: </em> <a rel="noreferrer noopener" href="https://learn.ethereallab.app/homework/IT202-007-F23/it202-milestone-3-api-project/grade/tma29" target="_blank">Grading</a></td></tr></table>
 <table><tr><td> <em>Instructions: </em> <ol><li>Checkout Milestone3 branch</li><li>Create a new markdown file called milestone3.md</li><li>git add/commit/push immediate</li><li>Fill in the below deliverables</li><li>At the end copy the markdown and paste it into milestone3.md</li><li>Add/commit/push the changes to Milestone3</li><li>PR Milestone3 to dev and verify</li><li>PR dev to prod and verify</li><li>Checkout dev locally and pull changes just to be up to date</li><li>Submit the direct link to this new milestone3.md file from your GitHub prod branch to Canvas</li></ol><p>Note: Ensure all images appear properly on github and everywhere else. Images are only accepted from dev or prod, not local host. All website links must be from prod (you can assume/infer this by getting your dev URL and changing dev to prod).</p></td></tr></table>
 <table><tr><td> <em>Deliverable 1: </em> API Data Association </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707773-e6aef7cb-d5b2-4053-bbb1-b09fc609041e.png"></td></tr>
@@ -99,10 +99,10 @@
 <tr><td><img width="768px" src="https://firebasestorage.googleapis.com/v0/b/learn-e1de9.appspot.com/o/assignments%2Ftma29%2F2023-12-09T20.35.53fav-team-p4.png.webp?alt=media&token=a93b4fa6-29a2-4f85-b508-4fcb080a139a"/></td></tr>
 <tr><td> <em>Caption:</em> <p>Favorite teams code pt4<br></p>
 </td></tr>
-<tr><td><img width="768px" src="https://firebasestorage.googleapis.com/v0/b/learn-e1de9.appspot.com/o/assignments%2Ftma29%2F2023-12-09T20.36.32remove-fav-champ.png.webp?alt=media&token=89d006fc-5624-4737-8d6e-708bfc557f56"/></td></tr>
+<tr><td><img width="768px" src="https://firebasestorage.googleapis.com/v0/b/learn-e1de9.appspot.com/o/assignments%2Ftma29%2F2023-12-10T23.01.00image.png.webp?alt=media&token=3f7353e7-2e5f-4c94-a15f-0aa40e8a9e97"/></td></tr>
 <tr><td> <em>Caption:</em> <p>Remove favorite championship code<br></p>
 </td></tr>
-<tr><td><img width="768px" src="https://firebasestorage.googleapis.com/v0/b/learn-e1de9.appspot.com/o/assignments%2Ftma29%2F2023-12-09T20.36.37remove-fav-team.png.webp?alt=media&token=a6db3d79-b515-4854-a3f1-0ea9a09c238d"/></td></tr>
+<tr><td><img width="768px" src="https://firebasestorage.googleapis.com/v0/b/learn-e1de9.appspot.com/o/assignments%2Ftma29%2F2023-12-10T23.01.40image.png.webp?alt=media&token=7add0d6a-b1f3-487f-b50a-4b72472f995c"/></td></tr>
 <tr><td> <em>Caption:</em> <p>Remove favorite team code<br></p>
 </td></tr>
 <tr><td><img width="768px" src="https://firebasestorage.googleapis.com/v0/b/learn-e1de9.appspot.com/o/assignments%2Ftma29%2F2023-12-09T20.36.49champ-details-code.png.webp?alt=media&token=9dd61f62-f5be-4b39-939e-1cf904c7f589"/></td></tr>
@@ -153,7 +153,7 @@
 <tr><td><img width="768px" src="https://firebasestorage.googleapis.com/v0/b/learn-e1de9.appspot.com/o/assignments%2Ftma29%2F2023-12-09T21.11.13all-fav-teams-p2.png.webp?alt=media&token=b1d98f5c-f664-4b5c-9844-21789bb778c1"/></td></tr>
 <tr><td> <em>Caption:</em> <p>All favorite teams code p2<br></p>
 </td></tr>
-<tr><td><img width="768px" src="https://firebasestorage.googleapis.com/v0/b/learn-e1de9.appspot.com/o/assignments%2Ftma29%2F2023-12-09T21.11.14all-fav-teams-p3.png.webp?alt=media&token=e414ba9d-5666-4fc5-9d0b-f8d5da7edc4b"/></td></tr>
+<tr><td><img width="768px" src="https://firebasestorage.googleapis.com/v0/b/learn-e1de9.appspot.com/o/assignments%2Ftma29%2F2023-12-10T22.58.44image.png.webp?alt=media&token=0fc8df29-f10a-45f0-93d7-e96d158f3d2c"/></td></tr>
 <tr><td> <em>Caption:</em> <p>All favorite teams code p3<br></p>
 </td></tr>
 <tr><td><img width="768px" src="https://firebasestorage.googleapis.com/v0/b/learn-e1de9.appspot.com/o/assignments%2Ftma29%2F2023-12-09T21.11.34all-fav-champs-p1.png.webp?alt=media&token=a68db788-ef66-4888-bbf8-f4ef1404a5ff"/></td></tr>
@@ -162,7 +162,7 @@
 <tr><td><img width="768px" src="https://firebasestorage.googleapis.com/v0/b/learn-e1de9.appspot.com/o/assignments%2Ftma29%2F2023-12-09T21.11.36all-fav-champs-p2.png.webp?alt=media&token=2050871b-1ca4-4c16-b97d-81680c2d2855"/></td></tr>
 <tr><td> <em>Caption:</em> <p>All favorite championships code p2<br></p>
 </td></tr>
-<tr><td><img width="768px" src="https://firebasestorage.googleapis.com/v0/b/learn-e1de9.appspot.com/o/assignments%2Ftma29%2F2023-12-09T21.11.37all-fav-champs-p3.png.webp?alt=media&token=70925a4a-acf6-4e50-a4ed-9061d0ac3154"/></td></tr>
+<tr><td><img width="768px" src="https://firebasestorage.googleapis.com/v0/b/learn-e1de9.appspot.com/o/assignments%2Ftma29%2F2023-12-10T22.58.11image.png.webp?alt=media&token=8b7307cd-7f19-4035-970b-34cc07700f4b"/></td></tr>
 <tr><td> <em>Caption:</em> <p>All favorite championships code p3<br></p>
 </td></tr>
 <tr><td><img width="768px" src="https://firebasestorage.googleapis.com/v0/b/learn-e1de9.appspot.com/o/assignments%2Ftma29%2F2023-12-09T21.12.25fav-teams-get.png.webp?alt=media&token=40863041-299c-4869-bfa7-b8f69412617c"/></td></tr>
@@ -192,6 +192,7 @@
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-tma29-prod-ca1cfc624240.herokuapp.com/Project/admin/all_favorite_championships.php">https://it202-tma29-prod-ca1cfc624240.herokuapp.com/Project/admin/all_favorite_championships.php</a> </td></tr>
 <tr><td> <em>Sub-Task 4: </em> Include any PRs related to this task</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/TaherMAfini/tma29-it202-007/pull/89">https://github.com/TaherMAfini/tma29-it202-007/pull/89</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/TaherMAfini/tma29-it202-007/pull/97">https://github.com/TaherMAfini/tma29-it202-007/pull/97</a> </td></tr>
 </table></td></tr>
 <table><tr><td> <em>Deliverable 5: </em> Create a page that shows data not associated with any user (Note: This will likely be an admin page and is not the same as the previous item) </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707773-e6aef7cb-d5b2-4053-bbb1-b09fc609041e.png"></td></tr>
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Show screenshots of the page showing entities not associated with anyone (include code screenshots)</td></tr>
