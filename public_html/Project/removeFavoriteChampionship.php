@@ -31,11 +31,15 @@ if(!isset($_GET["champID"])) {
     die(header("Location: " . $return_path . $return_url));
 }
 
+var_export($_GET);
+
 $champID = (int)se($_GET, "champID", -1, false);
 $champName = se($_GET, "champName", "", false);
+$userID = (int)se($_GET, "userID", "", false);
 
-
-$userID = get_user_id();
+if(!isset($_GET["userID"])) {
+    $userID = get_user_id();
+}
 
 $db = getDB();
 
@@ -51,9 +55,9 @@ try {
     $stmt->execute();
     $rows = $stmt->rowCount();
     if($rows > 0) {
-        flash("Removed $champName from your favorite championships", "success");
+        flash("Removed $champName from favorite championships", "success");
     } else {
-        flash("$champName is already not in your favorite championships", "info");
+        flash("$champName is already not in favorite championships", "info");
     }
     die(header("Location: " . $return_path . $return_url));
 
