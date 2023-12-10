@@ -32,9 +32,11 @@ if(!isset($_GET["teamID"])) {
 
 $teamID = (int)se($_GET, "teamID", -1, false);
 $teamName = se($_GET, "teamName", "", false);
+$userID = (int)se($_GET, "userID", "", false);
 
-
-$userID = get_user_id();
+if(!isset($_GET["userID"])) {
+    $userID = get_user_id();
+}
 
 $db = getDB();
 
@@ -50,9 +52,9 @@ try {
     $stmt->execute();
     $rows = $stmt->rowCount();
     if($rows > 0) {
-        flash("Removed $teamName from your favorite teams", "success");
+        flash("Removed $teamName from favorite teams", "success");
     } else {
-        flash("$teamName is already not in your favorite teams", "info");
+        flash("$teamName is already not in favorite teams", "info");
     }
     die(header("Location: " . $return_path . $return_url));
 

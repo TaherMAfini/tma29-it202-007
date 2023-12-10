@@ -154,6 +154,7 @@ Display all user-championship favorited pairs with a link to championship detail
                                     <input type="hidden" name="champID" value="<?php se($fav["champ_id"], null, ""); ?>"/>
                                     <input type="hidden" name="champName" value="<?php se($fav["champ"], null, ""); ?>"/>
                                     <input type="hidden" name="username" value="<?php se($username) ?>"/>
+                                    <input type="hidden" name="userID" value="<?php se($fav, "user_id", -1); ?>"/>
                                     <input type="hidden" name="limit" value="<?php se($limit, null, 10); ?>"/>
                                     <input type="hidden" name="page" value="<?php se($page, null, 1); ?>"/>
                                     <input type="hidden" name="return" value="all_favorite_championships"/>

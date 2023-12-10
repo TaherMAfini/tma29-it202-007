@@ -157,6 +157,7 @@ Display all user-team favorited pairs with a link to team details, link to user 
                                     <input type="hidden" name="teamID" value="<?php se($fav["team_id"], null, ""); ?>"/>
                                     <input type="hidden" name="teamName" value="<?php se($fav["team"], null, ""); ?>"/>
                                     <input type="hidden" name="username" value="<?php se($username) ?>"/>
+                                    <input type="hidden" name="userID" value="<?php se($fav, "user_id", -1); ?>"/>
                                     <input type="hidden" name="limit" value="<?php se($limit, null, 10); ?>"/>
                                     <input type="hidden" name="page" value="<?php se($page, null, 1); ?>"/>
                                     <input type="hidden" name="return" value="all_favorite_teams"/>
