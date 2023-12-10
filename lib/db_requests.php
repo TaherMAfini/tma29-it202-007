@@ -423,7 +423,7 @@ function get_total_favorite_matches($db, $params) {
 //Taher Afini, tma29
 // Get the favorite matches for the current user (with and without team and championship filter)
 function get_favorite_matches($db, $params) {
-    $queryT = "SELECT  m.id, m.championship_id, t1.name as team1, m.score1, t2.name as team2, m.score2, m.date FROM Matches m JOIN Teams t1 ON t1.id = m.team1_id JOIN Teams t2 ON t2.id = m.team2_id JOIN Championships c ON c.id = m.championship_id WHERE (c.id IN (SELECT DISTINCT champ_id FROM FavoriteChampionships WHERE is_active = 1 AND user_id = :userID) OR t1.id IN (SELECT DISTINCT team_id FROM FavoriteTeams WHERE is_active = 1 AND user_id = :userID) OR t2.id IN (SELECT DISTINCT team_id FROM FavoriteTeams WHERE is_active = 1 AND user_id = :userID)) AND LOWER(c.name) LIKE LOWER(:champ) AND (LOWER(t1.name) LIKE LOWER(:team) OR LOWER(t2.name) LIKE LOWER(:team)) LIMIT :limit OFFSET :offset ORDER BY m.date DESC";
+    $queryT = "SELECT  m.id, m.championship_id, t1.name as team1, m.score1, t2.name as team2, m.score2, m.date FROM Matches m JOIN Teams t1 ON t1.id = m.team1_id JOIN Teams t2 ON t2.id = m.team2_id JOIN Championships c ON c.id = m.championship_id WHERE (c.id IN (SELECT DISTINCT champ_id FROM FavoriteChampionships WHERE is_active = 1 AND user_id = :userID) OR t1.id IN (SELECT DISTINCT team_id FROM FavoriteTeams WHERE is_active = 1 AND user_id = :userID) OR t2.id IN (SELECT DISTINCT team_id FROM FavoriteTeams WHERE is_active = 1 AND user_id = :userID)) AND LOWER(c.name) LIKE LOWER(:champ) AND (LOWER(t1.name) LIKE LOWER(:team) OR LOWER(t2.name) LIKE LOWER(:team)) ORDER BY m.date DESC LIMIT :limit OFFSET :offset";
 
     $userID = get_user_id();
 
