@@ -38,16 +38,35 @@ session_start();
             <li class="nav-item"><a href="<?php echo get_url('home.php'); ?>">Home</a></li>
             <li class="nav-item"><a href="<?php echo get_url('profile.php'); ?>">Profile</a></li>
             <li class="nav-item"><a href="<?php echo get_url('matches.php'); ?>">Matches</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Favorites</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="<?php echo get_url('favoriteTeams.php'); ?>">Teams</a>
+                    <a class="dropdown-item" href="<?php echo get_url('favoriteChampionships.php'); ?>">Championships</a>
+                </div>
+            </li>
         <?php endif; ?>
         <?php if (!is_logged_in()) : ?>
             <li class="nav-item"><a href="<?php echo get_url('login.php'); ?>">Login</a></li>
             <li class="nav-item"><a href="<?php echo get_url('register.php'); ?>">Register</a></li>
         <?php endif; ?>
         <?php if (has_role("Admin")) : ?>
-            <li class="nav-item"><a href="<?php echo get_url('admin/create_role.php'); ?>">Create Role</a></li>
-            <li class="nav-item"><a href="<?php echo get_url('admin/list_roles.php'); ?>">List Roles</a></li>
-            <li class="nav-item"><a href="<?php echo get_url('admin/assign_roles.php'); ?>">Assign Roles</a></li>
-            <li class="nav-item"><a href="<?php echo get_url('admin/update_data.php'); ?>">Update API Data</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="<?php echo get_url('admin/create_role.php'); ?>">Create Role</a>
+                    <a class="dropdown-item" href="<?php echo get_url('admin/list_roles.php'); ?>">List Roles</a>
+                    <a class="dropdown-item" href="<?php echo get_url('admin/assign_roles.php'); ?>">Assign Roles</a>
+                    <a class="dropdown-item" href="<?php echo get_url('admin/update_data.php'); ?>">Update API Data</a>
+                    <a class="dropdown-item" href="<?php echo get_url('admin/unassociated_teams.php'); ?>">Unassociated Teams</a>
+                    <a class="dropdown-item" href="<?php echo get_url('admin/unassociated_championships.php'); ?>">Unassociated Championships</a>
+                    <a class="dropdown-item" href="<?php echo get_url('admin/all_favorite_teams.php'); ?>">All Favorite Teams</a>
+                    <a class="dropdown-item" href="<?php echo get_url('admin/all_favorite_championships.php'); ?>">All Favorite Championships</a>
+                    <a class="dropdown-item" href="<?php echo get_url('admin/assign_favorite_teams.php'); ?>">Assign Favorite Teams</a>
+                    <a class="dropdown-item" href="<?php echo get_url('admin/assign_favorite_championships.php'); ?>">Assign Favorite Championships</a>
+                </div>
+            </li>
+            
         <?php endif; ?>
         <?php if (has_role("Admin") || has_role("Creator")) : ?>
             <li class="nav-item"><a href="<?php echo get_url('creator/add_match.php'); ?>">Create Match</a></li>
