@@ -9,36 +9,8 @@ if (!has_role("Admin") && !has_role("Creator")) {
 
 $db = getDB();
 
-$queryC = "Select id, name from Championships ORDER BY name ASC";
-$queryT = "Select id, name from Teams ORDER BY name ASC";
-
-$stmtC= $db->prepare($queryC);
-
-try {
-    $stmtC->execute();
-    $results = $stmtC->fetchAll(PDO::FETCH_ASSOC);
-    if ($results) {
-        $championships = $results;
-    } else {
-        $championships = [];
-    }
-} catch (PDOException $e) {
-    flash(var_export($e->errorInfo, true), "danger");
-}
-
-$stmtT= $db->prepare($queryT);
-
-try {
-    $stmtT->execute();
-    $results = $stmtT->fetchAll(PDO::FETCH_ASSOC);
-    if ($results) {
-        $teams = $results;
-    } else {
-        $teams = [];
-    }
-} catch (PDOException $e) {
-    flash(var_export($e->errorInfo, true), "danger");
-}
+$championships = get_championships($db);
+$teams = get_teams($db);
 
 
 if(isset($_POST["date"]) && isset($_POST["championship"]) && isset($_POST["team1"]) && isset($_POST["team2"]) && isset($_POST["score1"]) && isset($_POST["score2"])) {
